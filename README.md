@@ -1,5 +1,8 @@
 # sukedachi
 
+https://github.com/rakudaBombayer/requirements3
+
+
 ユーザーと課題が定義されて、ユーザーの課題を解決するものになっている
 プログラムが正しく動作する（エラー等で落ちない）
 コードが読みやすい（静的解析ツールを通している）
