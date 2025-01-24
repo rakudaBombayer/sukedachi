@@ -4,23 +4,20 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateChatMessagesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('chat_messages', function (Blueprint $table) {
-            $table->id();
+            $table->id('chat_message_ID');
+            $table->foreignId('chat_room_ID')->constrained('chat_rooms', 'chat_room_ID');
+            $table->foreignId('user_ID')->constrained('users', 'user_ID');
+            $table->text('text'); 
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('chat_messages');
     }
