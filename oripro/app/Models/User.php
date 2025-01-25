@@ -38,11 +38,27 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
+
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function chatMessages()
+    {
+        return $this->hasMany(ChatMessage::class, 'user_ID');
+    }
+
+    public function requests()
+    {
+        return $this->hasMany(Request::class, 'user_ID');
+    }
+
+    public function applicants()
+    {
+        return $this->hasMany(Applicant::class, 'user_ID');
     }
 }
