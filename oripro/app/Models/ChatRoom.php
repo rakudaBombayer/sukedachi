@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class ChatRoom extends Model
 {
+    use HasFactory;
+    
     protected $table = 'chat_rooms';
     protected $primaryKey = 'chat_room_ID';
     protected $fillable = ['chat_room_ID','user_ID'];
