@@ -1,6 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ChatRoomController;
+use App\Http\Controllers\ChatMessageController;
+use App\Http\Controllers\RequestController;
+use App\Http\Controllers\ApplicantController;
+use App\Http\Controllers\HelpCategoryController;
+use App\Http\Controllers\ImageController;
+use App\Http\Controllers\PaymentController;
+
+
 
 Route::get('/', function () {
     return view('welcome');
