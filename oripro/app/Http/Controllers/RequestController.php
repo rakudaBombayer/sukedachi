@@ -47,4 +47,11 @@ use Illuminate\Http\Request;
             {
                 $request->delete(); return redirect()->route('requests.index'); 
             } 
+
+            // ここに追加
+        public function complete()
+        {
+        // 投稿完了画面のロジックを記述
+            return view('requests.complete'); // 例：requests/complete.blade.php を表示
+        }
     }

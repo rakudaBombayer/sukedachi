@@ -16,5 +16,5 @@
         <button type="submit">Create</button>
     </form>
     <button styled=><a href="{{ route('requests.complete') }}" style="color: red;">投稿</a></button>
-    <button styled=>投稿</button>
+    <button styled=>戻る</button>
 @endsection

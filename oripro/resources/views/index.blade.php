@@ -5,7 +5,7 @@
 </head>
 <body>
     <h1></h1>
-    <p>これはおうぼ画面</p>
+    <p>これは閲覧画面画面</p>
     <nav>
         <ul>
             <li><a href="{{ route('requests.create') }}" style="color: red;">手伝って</a></li>

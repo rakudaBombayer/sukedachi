@@ -27,7 +27,7 @@ Route::resource('chat_rooms.messages', ChatMessageController::class);
 // Requestルート
 Route::resource('requests', RequestController::class);
 
-Route::get('requests/complete', [RequestController::class, 'complete'])->name('requests.complete');
+Route::get('requests.complete', [RequestController::class, 'complete'])->name('requests.complete');
 
 // Applicantルート
 Route::resource('applicants', ApplicantController::class);
