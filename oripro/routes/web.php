@@ -9,14 +9,17 @@ use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\HelpCategoryController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\YourHomeController;
 
 
-Route::get('/', function () {
-    return view('index');
-});// routes/web.php
 
 // Userルート
 Route::resource('users', UserController::class);
+
+//ホーム画面へ
+Route::get('/', function () {
+    return view('index');
+})->name('index');// routes/web.php
 
 // ChatRoomルート
 Route::resource('chat_rooms', ChatRoomController::class);

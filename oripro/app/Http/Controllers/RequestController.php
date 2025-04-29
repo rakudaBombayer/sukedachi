@@ -10,14 +10,14 @@ use Illuminate\Http\Request;
         { 
             $requests = UserRequest::all();
             
-            return view('requests.index',
+            return view('requests/index',
             
             compact('requests')); 
         } 
         
         public function create() 
             { 
-            return view('requests.create'); 
+            return view('requests/create'); 
             }
             
         public function store(Request $request) 
