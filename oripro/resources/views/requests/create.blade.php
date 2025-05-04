@@ -2,7 +2,8 @@
 
 @section('content')
     <h1>依頼投稿画面</h1>
-    <form method="POST" action="{{ route('users.store') }}">
+    {{-- <form method="POST" action="{{ route('users.store') }}"> --}}
+    <form method="POST" action="{{ route('requests.store') }}">
         @csrf
         <div>
             <label for="title">タイトル</label>
@@ -50,5 +51,5 @@
     
         <button type="submit"><a href="{{ route('requests.complete') }}" style="color: red;">投稿</a></button>
     </form>
-    <button styled=>戻る</button>
+    <button><a href="{{ url()->previous() }}">戻る</a></button>
 @endsection
