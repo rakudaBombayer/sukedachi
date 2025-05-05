@@ -17,9 +17,8 @@ use App\Http\Controllers\YourHomeController;
 Route::resource('users', UserController::class);
 
 //ホーム画面へ
-Route::get('/', function () {
-    return view('index');
-})->name('index');// routes/web.php
+Route::get('/', [YourHomeController::class, 'index'])->name('index');
+
 
 // ChatRoomルート
 Route::resource('chat_rooms', ChatRoomController::class);
@@ -42,6 +41,3 @@ Route::resource('help_categories', HelpCategoryController::class);
 
 // Imageルート
 Route::resource('images', ImageController::class);
-
-// Paymentルート
-Route::resource('payments', PaymentController::class);
