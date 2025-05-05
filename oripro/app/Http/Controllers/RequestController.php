@@ -41,6 +41,13 @@ use Illuminate\Http\Request;
             if (isset($requestData['general_area'])) {
                 $data['general_area'] = $requestData['general_area'];
             }
+
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $filename = time() . '.' . $image->getClientOriginalExtension();
+                $path = $image->storeAs('public/images', $filename); // storage/app/public/images に保存
+                $data['image_path'] = str_replace('public/', 'storage/', $path); // public ディレクトリからの相対パスを保存
+            }
             
             // UserRequest::create($request->all()); return redirect()->route('requests.index'); 
 
