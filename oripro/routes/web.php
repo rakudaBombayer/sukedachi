@@ -32,6 +32,8 @@ Route::resource('requests', RequestController::class);
 
 Route::get('complete', [RequestController::class, 'complete'])->name('requests.complete');
 
+Route::post('/requests', [RequestController::class, 'store'])->name('requests.store');
+
 // Applicantルート
 Route::resource('applicants', ApplicantController::class);
 

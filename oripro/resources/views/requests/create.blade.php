@@ -12,7 +12,7 @@
     
         <div>
             <label for="help_type">お手伝い種類</label>
-            <input type="text" id="help_type" name="help_type" required>
+            <input type="text" id="help_type" name="help_name" required>
         </div>
     
         <div>
@@ -21,8 +21,8 @@
         </div>
     
         <div>
-            <label for="preferred_datetime">希望日、希望時間</label>
-            <input type="datetime-local"" id="preferred_datetime" name="preferred_datetime" required>
+            <label for="requested_date">希望日、希望時間</label>
+            <input type="datetime-local"" id="requested_date" name="requested_date" required>
         </div>
     
         <div>
@@ -41,15 +41,11 @@
     
         <div>
             <label for="location">大まかな場所</label>
-            <input type="text" id="location" name="location" required>
+            <input type="text" id="location" name="general_area" required>
         </div>
     
-        <div>
-            <label for="deadline">募集期限</label>
-            <input type="datetime-local" id="deadline" name="deadline" required>
-        </div>
     
-        <button type="submit"><a href="{{ route('requests.complete') }}" style="color: red;">投稿</a></button>
+        <button type="submit">投稿</a></button>
     </form>
     <button><a href="{{ url()->previous() }}">戻る</a></button>
 @endsection
