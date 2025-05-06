@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ホーム</title>
+    <title>スケダチ</title>
 </head>
 <body>
     <h1></h1>

@@ -23,6 +23,8 @@ Route::get('/', [YourHomeController::class, 'index'])->name('index');
 // ChatRoomルート
 Route::resource('chat_rooms', ChatRoomController::class);
 
+Route::post('/chat_rooms/goto/{request}', [ChatRoomController::class, 'gotoChat'])->name('chat_rooms.goto');
+
 // ChatMessageルート（ネストされたリソースルート）
 Route::resource('chat_rooms.messages', ChatMessageController::class);
 

@@ -3,6 +3,11 @@
 @section('content')
     <h1>依頼詳細</h1>
 
+    <form method="POST" action="{{ route('chat_rooms.goto', $request->request_ID) }}">
+      @csrf
+      <button type="submit">手伝う</button>
+  </form>
+
     <div>
         <strong>タイトル:</strong> {{ $request->title }}
     </div>
@@ -34,5 +39,5 @@
         <strong>場所:</strong> {{ $request->general_area }}
     </div>
 
-    <button><a href="{{ url()->previous() }}">戻る</a></button>
+    <button><a href="{{ route('index') }}">ホームへ戻る</a></button>
 @endsection
