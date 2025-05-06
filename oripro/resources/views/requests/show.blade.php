@@ -34,5 +34,5 @@
         <strong>場所:</strong> {{ $request->general_area }}
     </div>
 
-    <button><a href="{{ route('requests.index') }}">一覧に戻る</a></button>
+    <button><a href="{{ url()->previous() }}">戻る</a></button>
 @endsection
