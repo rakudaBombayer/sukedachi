@@ -41,7 +41,8 @@ use Illuminate\Http\Request;
             if (isset($requestData['general_area'])) {
                 $data['general_area'] = $requestData['general_area'];
             }
-
+            
+            //画像の保存処理↓(あまり理解していないのでもう一度)
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
                 $filename = time() . '.' . $image->getClientOriginalExtension();
