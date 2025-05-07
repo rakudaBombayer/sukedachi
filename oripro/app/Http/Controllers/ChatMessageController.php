@@ -20,14 +20,16 @@ class ChatMessageController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'chat_room_ID' => 'required|exists:chat_rooms,chat_room_ID',
-            'user_ID' => 'required|exists:users,user_ID',
-            'text' => 'required|string',
-        ]);
 
-        ChatMessage::create($request->all());
-        return redirect()->route('chat_messages.index');
+        // $data['user_ID'] = 1; // ← 一時的にユーザーIDをハードコード (例: 1)
+        
+        ChatMessage::create([
+            'chat_room_ID' => $request->input('chat_room_ID'),
+            'user_ID' => 1, // ログインしているユーザーのIDを取得
+            'text' => $request->input('text'),
+        ]);
+        
+        return back(); // 直前のページへリダイレクト
     }
 
     public function show(ChatMessage $chatMessage)

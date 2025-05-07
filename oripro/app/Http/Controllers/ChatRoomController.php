@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ChatRoom;
+use App\Models\ChatMessage; 
 use App\Models\Request as UserRequest; // 正しい名前空間で use
 use Illuminate\Http\Request;
 
@@ -15,8 +16,10 @@ class ChatRoomController extends Controller
     {
         $chatRooms = ChatRoom::all();
         $previousRequestId = Session::get('previous_request_id'); // セッションから前の依頼IDを取得
+
+        $chatMessages = ChatMessage::where('chat_room_ID', 1)->get();
         
-        return view('chat_rooms.index', compact('chatRooms', 'previousRequestId'));
+        return view('chat_rooms.index', compact('chatRooms', 'previousRequestId', 'chatMessages')); 
     }
 
     public function create()

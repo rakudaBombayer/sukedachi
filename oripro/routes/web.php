@@ -28,6 +28,8 @@ Route::post('/chat_rooms/goto/{request}', [ChatRoomController::class, 'gotoChat'
 // ChatMessageルート（ネストされたリソースルート）
 Route::resource('chat_rooms.messages', ChatMessageController::class);
 
+Route::post('/chat-messages', [ChatMessageController::class, 'store'])->name('chat_messages.store');
+
 // Requestルート
 Route::resource('requests', RequestController::class);
 
