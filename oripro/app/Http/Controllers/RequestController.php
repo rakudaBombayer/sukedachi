@@ -3,6 +3,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Request as UserRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 
     class RequestController extends Controller 
     { 
@@ -49,14 +51,18 @@ use Illuminate\Http\Request;
                 $path = $image->storeAs('public/images', $filename); // storage/app/public/images に保存
                 $data['image_path'] = str_replace('public/', 'storage/', $path); // public ディレクトリからの相対パスを保存
             }
+
+            $requestModel = UserRequest::create($data);
+            
+            // $requestModel = RequestModel::create($requestData); // 保存したモデルのインスタンスを取得
             
             // UserRequest::create($request->all()); return redirect()->route('requests.index'); 
 
             // データをデータベースに保存
-            UserRequest::create($data);
+            // UserRequest::create($data);
 
-            // 保存が完了したらリダイレクトなどの処理を行う
-            return redirect()->route('requests.complete')->with('success', '依頼を投稿しました！');
+            // 保存が完了したらリダイレクト
+            return redirect()->route('requests.complete', ['request' => $requestModel]);
         } 
                 
         public function show(UserRequest $request) 
@@ -82,9 +88,9 @@ use Illuminate\Http\Request;
         } 
 
             // ここに追加
-        public function complete()
+        public function complete(\App\Models\Request $request)
         {
         // 投稿完了画面のロジックを記述
-            return view('requests.complete'); // 例：requests/complete.blade.php を表示
+            return view('requests.complete', ['request' => $request]);
         }
     }

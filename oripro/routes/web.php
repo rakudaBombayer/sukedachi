@@ -33,7 +33,7 @@ Route::post('/chat-messages', [ChatMessageController::class, 'store'])->name('ch
 // Requestルート
 Route::resource('requests', RequestController::class);
 
-Route::get('complete', [RequestController::class, 'complete'])->name('requests.complete');
+Route::get('/complete/{request}', [RequestController::class, 'complete'])->name('requests.complete');
 
 Route::post('/requests', [RequestController::class, 'store'])->name('requests.store');
 
