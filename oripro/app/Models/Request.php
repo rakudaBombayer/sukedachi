@@ -12,8 +12,16 @@ class Request extends Model
     protected $table = 'requests';
     protected $primaryKey = 'request_ID';
     protected $fillable = [
-        'user_ID', 'help_category_ID', 'title', 'requested_date',
-        'image_ID', 'payment_ID', 'payment_method', 'estimated_time', 'general_area'
+        'user_ID', 
+        'help_category_ID', 
+        'title', 
+        'requested_date',
+        'image_ID', 
+        'payment_ID', 
+        'payment_method', 
+        'estimated_time', 
+        'general_area',
+        'image_path' // 既存の画像パスカラム
     ];
 
     public function applicants()
@@ -33,7 +41,7 @@ class Request extends Model
 
     public function image()
     {
-        return $this->hasMany(Image::class, 'image_ID');
+        return $this->belongsTo(Image::class, 'image_ID', 'image_ID');
     }
 
     public function payment()

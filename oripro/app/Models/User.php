@@ -20,9 +20,13 @@ class User extends Authenticatable
     protected $table = 'users';
     protected $primaryKey = 'user_ID';
     protected $fillable = [
-        'name',
+        'user_ID',
+        'nickname',
         'email',
         'password',
+        'address',
+        'self_introduction',
+        // 他の許可したいカラムも追加
     ];
 
     /**

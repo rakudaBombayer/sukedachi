@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Request as UserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 
     class RequestController extends Controller 
@@ -20,50 +21,47 @@ use Illuminate\Support\Facades\Storage;
             return view('requests/create'); 
         }
             
-        public function store(Request $request) 
-        { 
-            $requestData = $request->all();
-            
-            $data['user_ID'] = 1; // ← 一時的にユーザーIDをハードコード (例: 1)
+        public function store(Request $request)
+            {
+                $requestData = $request->all();
 
-            $data['help_category_ID'] = 1;
+                $data = [
+                    'user_ID' => 1,
+                    'help_category_ID' => 1,
+                    'title' => $requestData['title'] ?? null,
+                    'requested_date' => isset($requestData['requested_date']) ? date('Y-m-d', strtotime($requestData['requested_date'])) : null,
+                    'estimated_time' => $requestData['estimated_time'] ?? null,
+                    'general_area' => $requestData['general_area'] ?? null,
+                ];
 
-            $data['payment_method'] = '未設定'; // デフォルト値を設定
+                $requestModel = UserRequest::create($data);
 
-            if (isset($requestData['title'])) {
-                $data['title'] = $requestData['title'];
+                 //画像の保存処理↓(あまり理解していないのでもう一度)
+                try {
+                if ($request->hasFile('image')) {
+                    Log::info('Image file is present.');
+                    $imageFile = $request->file('image');
+                    $filename = time() . '.' . $imageFile->getClientOriginalExtension();
+                    $destinationPath = storage_path('app/public/images');
+                    $imageFile->move($destinationPath, $filename); // move() を使用
+                    $imageUrl = Storage::url('images/' . $filename);
+                    $imageModel = new \App\Models\Image(['image' => $imageUrl]);
+                    $imageModel->save();
+                    $imageModel->refresh();
+
+                    $requestModel->image_ID = $imageModel->image_ID;
+                    $requestModel->save();
+
+                    Log::info('Saved image ID:', ['image_id' => $requestModel->image_ID]);
+                } else {
+                    Log::info('Image file is NOT present.');
+                }
+            } catch (\Exception $e) {
+                Log::error('Image saving error:', ['message' => $e->getMessage()]);
             }
-        
-            if (isset($requestData['requested_date'])) {
-                $data['requested_date'] = date('Y-m-d', strtotime($requestData['requested_date']));
-            }
-            if (isset($requestData['estimated_time'])) {
-                $data['estimated_time'] = $requestData['estimated_time'];
-            }
-            if (isset($requestData['general_area'])) {
-                $data['general_area'] = $requestData['general_area'];
-            }
-            
-            //画像の保存処理↓(あまり理解していないのでもう一度)
-            if ($request->hasFile('image')) {
-                $image = $request->file('image');
-                $filename = time() . '.' . $image->getClientOriginalExtension();
-                $path = $image->storeAs('public/images', $filename); // storage/app/public/images に保存
-                $data['image_path'] = str_replace('public/', 'storage/', $path); // public ディレクトリからの相対パスを保存
-            }
 
-            $requestModel = UserRequest::create($data);
-            
-            // $requestModel = RequestModel::create($requestData); // 保存したモデルのインスタンスを取得
-            
-            // UserRequest::create($request->all()); return redirect()->route('requests.index'); 
-
-            // データをデータベースに保存
-            // UserRequest::create($data);
-
-            // 保存が完了したらリダイレクト
-            return redirect()->route('requests.complete', ['request' => $requestModel]);
-        } 
+                return redirect()->route('requests.complete', ['request' => $requestModel]);
+            }   
                 
         public function show(UserRequest $request) 
         {

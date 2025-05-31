@@ -3,7 +3,7 @@
 @section('content')
     <h1>依頼投稿画面</h1>
     {{-- <form method="POST" action="{{ route('users.store') }}"> --}}
-    <form method="POST" action="{{ route('requests.store') }}">
+        <form method="POST" action="{{ route('requests.store') }}" enctype="multipart/form-data">
         @csrf
         <div>
             <label for="title">タイトル</label>
@@ -28,9 +28,9 @@
         <div>
             <label for="image">お手伝い画像</label>
             <input type="file" id="image" name="image">
-            <input type="file" id="image2" name="image">
+            {{-- <input type="file" id="image2" name="image">
             <input type="file" id="image3" name="image">
-            <input type="file" id="image4" name="image">
+            <input type="file" id="image4" name="image"> --}}
             <small>JPEG、PNG、GIF形式のファイルを選択してください。</small>
         </div>
     

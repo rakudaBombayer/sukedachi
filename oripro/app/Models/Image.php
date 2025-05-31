@@ -11,10 +11,14 @@ class Image extends Model
 
     protected $table = 'images';
     protected $primaryKey = 'image_ID';
+    public $incrementing = true;
     protected $fillable = ['image'];
+
+    public $timestamps = false; // ← これを追加
+
     
-    public function requests()
+    public function request()
     {
-        return $this->belongsTo(Request::class, 'image_ID');
+        return $this->belongsTo(Request::class, 'image_ID'); 
     }
 }
