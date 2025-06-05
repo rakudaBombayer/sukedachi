@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Log;
         public function index() 
         { 
             $requests = UserRequest::all();
+            // $requests = UserRequest::paginate(10);
+
+                // foreach (UserRequest::cursor() as $request) {
+                //     $requests[] = $request;
+                // }
             
             return view('requests/index',compact('requests')); 
         } 

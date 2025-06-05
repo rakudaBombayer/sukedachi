@@ -1,6 +1,14 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 
-@section('content')
+@section('content') --}}
+
+    <!DOCTYPE html>
+<html>
+<head>
+    <title>スケダチ</title>
+</head>
+<body>
+
     <h1>依頼投稿画面</h1>
     {{-- <form method="POST" action="{{ route('users.store') }}"> --}}
         <form method="POST" action="{{ route('requests.store') }}" enctype="multipart/form-data">
@@ -48,4 +56,4 @@
         <button type="submit">投稿</a></button>
     </form>
     <button><a href="{{ url()->previous() }}">戻る</a></button>
-@endsection
+{{-- @endsection --}}

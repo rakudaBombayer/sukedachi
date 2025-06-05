@@ -1,6 +1,14 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 
-@section('content')
+@section('content') --}}
+
+    <!DOCTYPE html>
+<html>
+<head>
+    <title>スケダチ</title>
+</head>
+    <body>
+
     <h1>スケダチ</h1>
     <div>ちゃっとるーむへようこそ</div>
 
@@ -28,6 +36,7 @@
             @endforeach
         </ul>
     </div>
+</body>
 
     {{-- ここに投稿されたメッセージを表示する処理を追加します --}}
-@endsection
+{{-- @endsection --}}

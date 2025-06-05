@@ -1,6 +1,14 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 
-@section('content')
+@section('content') --}}
+
+    <!DOCTYPE html>
+<html>
+<head>
+    <title>スケダチ</title>
+</head>
+<body>
+
     <h1>投稿できました。応募があるまでお待ちください。</h1>
 
     <h2>投稿内容</h2>
@@ -23,4 +31,4 @@
 
     <button><a href="{{ route('index') }}" style="color: red;">ホームへ</a></button>
 
-@endsection
+{{-- @endsection --}}
