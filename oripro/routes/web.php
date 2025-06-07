@@ -11,6 +11,7 @@ use App\Http\Controllers\ChatRoomController;
 
 use App\Http\Controllers\ChatMessageController;
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 use App\Http\Controllers\ApplicantController;
 
@@ -111,5 +112,11 @@ Route::resource('help_categories', HelpCategoryController::class);
 // Imageルート
 
 Route::resource('images', ImageController::class);
+
+
+// ログアウト
+
+// Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
 
 require __DIR__.'/auth.php';
