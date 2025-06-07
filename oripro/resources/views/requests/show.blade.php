@@ -47,6 +47,46 @@
         <strong>場所:</strong> {{ $request->general_area }}
     </div>
 
+    
+
+    
+
+
+    {{-- ログインしている場合のみ表示 お試し↓ --}}
+@auth
+    {{-- ログインユーザーが依頼の投稿者である場合のみ、編集・削除ボタンを表示 --}}
+    @if (Auth::id() === $request->user_ID)
+        <div style="margin-top: 20px;">
+            {{-- 編集ボタン --}}
+            <a href="{{ route('requests.edit', $request->request_ID) }}" style="padding: 8px 15px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+                編集
+            </a>
+
+            {{-- 削除ボタン (フォームとして実装し、DELETEメソッドを偽装) --}}
+            <form action="{{ route('requests.destroy', $request->request_ID) }}" method="POST" onsubmit="return confirm('本当にこの依頼を削除しますか？');" style="display:inline-block; margin-left: 10px;">
+                @csrf
+                @method('DELETE')
+                <button type="submit" style="padding: 8px 15px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    削除
+                </button>
+            </form>
+        </div>
+    @endif
+@endauth
+
+
+
+        {{-- ↑ここに編集ボタンをお試し。 --}}
+
+
+
+
+
+
+
+
+
+
     <button><a href="{{ route('index') }}">ホームへ戻る</a></button>
     </body>
 {{-- @endsection --}}
