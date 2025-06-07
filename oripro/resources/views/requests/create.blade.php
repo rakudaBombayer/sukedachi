@@ -55,5 +55,6 @@
     
         <button type="submit">投稿</a></button>
     </form>
-    <button><a href="{{ url()->previous() }}">戻る</a></button>
+    <button><a href="{{ route('index') }}">戻る</a></button>
+</body>
 {{-- @endsection --}}

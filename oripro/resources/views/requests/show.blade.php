@@ -8,10 +8,7 @@
         <head>
     <title>スケダチ</title>
         </head>
-        <body>
-
-
-
+    <body>
     <h1>依頼詳細</h1>
 
     <form method="POST" action="{{ route('chat_rooms.goto', $request->request_ID) }}">
@@ -51,4 +48,5 @@
     </div>
 
     <button><a href="{{ route('index') }}">ホームへ戻る</a></button>
+    </body>
 {{-- @endsection --}}

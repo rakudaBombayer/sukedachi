@@ -23,8 +23,16 @@
             <li><a href="{{ route('chat_rooms.index') }}" style="color: red;">手伝う</a></li> --}}
 
             @auth
-                <p>ようこそ、{{ Auth::user()->name }} さん！</p>
-                    <a href="{{ route('logout') }}">ログアウト</a>
+                <p>ようこそ、{{ Auth::user()->nickname }} さん！</p>
+                    
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+                </form>
+
+            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                ログアウト
+            </a>
+
             @else
                 <p>ログインしていません。</p>
                 <a href="{{ route('login') }}">ログイン</a>
