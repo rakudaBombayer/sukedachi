@@ -46,6 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/requests', [RequestController::class, 'store'])->name('requests.store');
 });
 
 
@@ -118,5 +119,7 @@ Route::resource('images', ImageController::class);
 
 // Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
+//投稿物の編集機能
+Route::resource('posts', RequestController::class)->middleware(['auth']); // ログイン必須とする場合
 
 require __DIR__.'/auth.php';

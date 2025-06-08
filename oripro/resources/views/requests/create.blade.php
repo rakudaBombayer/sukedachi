@@ -18,9 +18,18 @@
             <input type="text" id="title" name="title" required>
         </div>
     
-        <div>
+        {{-- <div>
             <label for="help_type">お手伝い種類</label>
             <input type="text" id="help_type" name="help_name" required>
+        </div> --}}
+        <div>
+            <label for="help_type">お手伝い種類</label>
+            <select name="help_category_ID">
+                <option value="1">送迎</option>
+                <option value="2">手伝い</option>
+                <option value="3">買い物</option>
+                <option value="4">その他</option>
+            </select>
         </div>
     
         <div>

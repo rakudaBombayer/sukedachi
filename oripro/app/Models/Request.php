@@ -11,6 +11,8 @@ class Request extends Model
     
     protected $table = 'requests';
     protected $primaryKey = 'request_ID';
+    public $incrementing = true; // プライマリキーが自動増分の場合
+    
     protected $fillable = [
         'user_ID', 
         'help_category_ID', 
