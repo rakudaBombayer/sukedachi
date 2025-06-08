@@ -8,7 +8,7 @@
     <title>スケダチ</title>
 </head>
 <body>
-
+    <div>{{ Auth::id() }}</div>
     <h1>依頼投稿画面</h1>
     {{-- <form method="POST" action="{{ route('users.store') }}"> --}}
         <form method="POST" action="{{ route('requests.store') }}" enctype="multipart/form-data">
@@ -61,7 +61,7 @@
             <input type="text" id="location" name="general_area" required>
         </div>
     
-    
+        <input type="hidden" name="user_ID" value="{{ Auth::id() }}">
         <button type="submit">投稿</a></button>
     </form>
     <button><a href="{{ route('index') }}">戻る</a></button>

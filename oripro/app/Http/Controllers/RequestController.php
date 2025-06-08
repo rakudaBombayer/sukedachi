@@ -3,28 +3,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Request as UserRequest;
 
-// use App\Models\HelpCategory; // createメソッドで必要
+use App\Models\HelpCategory; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
-use Illuminate\Support\Facades\Auth; // ★この行を追加！
+use Illuminate\Support\Facades\Auth; 
 
 
     class RequestController extends Controller 
     { 
 
-                // ★このコンストラクタを追加してください！
         public function __construct()
         {
+            // parent::__construct(); 
 
-            // parent::__construct(); // ★この行を追加！
-            // $this->middleware('auth')->except(['index', 'show', 'create', 'complete']);
-
-            // もし create もログイン必須にするなら以下のように書く
-            // $this->middleware('auth')->except(['index', 'show', 'complete']);
-            // あるいは、全てログイン必須なら
-            // $this->middleware('auth');
+            // $this->middleware('auth')->except(['index', 'show', 'create', 'complete']); 
         }
 
         
@@ -46,8 +40,16 @@ use Illuminate\Support\Facades\Auth; // ★この行を追加！
         }
             
         public function store(Request $request)
-            {
+            {   
+                
                 $requestData = $request->all();
+                
+                // dd($request->all());
+                
+                if (!Auth::check()) {
+                return redirect()->route('login')->with('error', 'ログインしてください。');
+                }
+                
 
                 $data = [
                     'user_ID' => Auth::id(), // ★修正：ログインユーザーのIDを自動でセット
@@ -59,6 +61,8 @@ use Illuminate\Support\Facades\Auth; // ★この行を追加！
                     'general_area' => $requestData['general_area'] ?? null,
                 ];
 
+
+                // dd($request->all());
                 // $requestModel = UserRequest::create($data);
                 // dd($requestModel);
 
@@ -100,24 +104,47 @@ use Illuminate\Support\Facades\Auth; // ★この行を追加！
         
         public function edit(UserRequest $request) 
         {   
+            // dd(Auth::id(), $request->user_ID);
+
+            
             // ★追加：投稿の所有者以外が編集できないようにする
             if (Auth::id() !== $request->user_ID) {
                 abort(403, 'Unauthorized action.'); // 403 Forbidden エラーを返す
             }
-            return view('requests.edit', compact('request')); 
+
+            // ★追加: ヘルプカテゴリのデータを取得してビューに渡す
+            $helpCategories = HelpCategory::all();
+            
+            // return view('requests.edit', compact('request')); 
+            return view('requests.edit', compact('request', 'helpCategories')); // ★修正: helpCategoriesも渡す
         } 
         
         
-        public function update(Request $request, UserRequest $useRequest)
+        // public function update(Request $request, UserRequest $userRequest)
+        public function update(Request $request, $requestId)
         { 
+            
+            $userRequest = UserRequest::findOrFail($requestId); // 明示的に取得
+            // dd($request->all());
+            // dd($userRequest); 
+            
+            // dd($userRequest);
+            
             // ★追加：投稿の所有者以外が更新できないようにする
             if (Auth::id() !== $userRequest->user_ID) {
+                dd(Auth::id(), $userRequest->user_ID); // デバッグ用
+                
                 abort(403, 'Unauthorized action.');
             }
             
             $request->validate([ 'user_ID' => 'required|exists:users,user_ID', 'help_category_ID' => 'required|exists:help_categories,help_category_ID', ]);
 
             $userRequest->update($request->except(['image'])); // 画像以外のデータを更新
+
+            // $data = $request->all();
+            // $data['user_ID'] = Auth::id(); // 明示的にログインユーザーをセット
+            // $userRequest->update($data);
+
             
 
             // 画像投稿編集機能↓
@@ -147,8 +174,9 @@ use Illuminate\Support\Facades\Auth; // ★この行を追加！
         }
 
         // 画像投稿編集機能↑
+    
         
-        return redirect()->route('requests.show', $userRequest->id) // 修正: 更新後に詳細ページへ
+        return redirect()->route('requests.show', ['request' => $userRequest->request_ID]) // 修正: 更新後に詳細ページへ
                 ->with('success', '投稿が更新されました。');
             
             //↓画像編集機能を試す前のリダイレクト先
@@ -159,6 +187,9 @@ use Illuminate\Support\Facades\Auth; // ★この行を追加！
         public function destroy(UserRequest $request) 
         {   
             // ★追加：投稿の所有者以外が削除できないようにする
+            $userRequest = UserRequest::findOrFail($request->request_ID); // ✔ 正しく取得
+            // dd($userRequest); 
+            
             if (Auth::id() !== $request->user_ID) {
             abort(403, 'Unauthorized action.');
         }
@@ -176,7 +207,7 @@ use Illuminate\Support\Facades\Auth; // ★この行を追加！
             //↑  ★追加：関連する画像を先に削除(try)  
         
             $request->delete(); 
-            return redirect()->route('requests.index')
+            return redirect()->route('index')
                             ->with('success', '投稿が削除されました。');
         } 
 

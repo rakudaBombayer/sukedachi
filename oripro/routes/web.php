@@ -92,10 +92,14 @@ Route::resource('requests', RequestController::class);
 
 Route::get('complete/{request}', [RequestController::class, 'complete'])->name('requests.complete');
 
+Route::get('/requests/{request}/edit', [RequestController::class, 'edit'])->name('requests.edit');
+
+// Route::put('/requests/{request}', [RequestController::class, 'update'])->name('requests.update');
 
 
 Route::post('/requests', [RequestController::class, 'store'])->name('requests.store');
 
+// Route::put('/requests/{request}', [RequestController::class, 'update'])->name('requests.update');
 
 
 // Applicantルート
