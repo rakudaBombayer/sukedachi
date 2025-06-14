@@ -13,7 +13,20 @@
 
     <form method="POST" action="{{ route('chat_rooms.goto', $request->request_ID) }}">
       @csrf
-      <button type="submit">手伝う</button>
+
+
+      @auth
+    @if (Auth::id() !== $request->user_ID)
+        <form method="POST" action="{{ route('chat_rooms.goto', $request->request_ID) }}">
+            @csrf
+            <button type="submit">手伝う</button>
+        </form>
+        @endif
+    @endauth
+
+
+
+
   </form>
 
     <div>
@@ -49,7 +62,7 @@
 
     
 
-    
+
 
 
     {{-- ログインしている場合のみ表示 お試し↓ --}}

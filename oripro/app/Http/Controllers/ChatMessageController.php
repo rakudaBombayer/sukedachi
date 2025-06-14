@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\ChatMessage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class ChatMessageController extends Controller
 {
@@ -21,15 +23,18 @@ class ChatMessageController extends Controller
     public function store(Request $request)
     {
 
-        // $data['user_ID'] = 1; // ← 一時的にユーザーIDをハードコード (例: 1)
+        $request->validate([
+        'chat_room_ID' => 'required|exists:chat_rooms,chat_room_ID',
+        'text' => 'required|string',
+    ]);
         
         ChatMessage::create([
             'chat_room_ID' => $request->input('chat_room_ID'),
-            'user_ID' => 1, // ログインしているユーザーのIDを取得
+            'user_ID' => Auth::id(),// ログインしているユーザーのIDを取得
             'text' => $request->input('text'),
         ]);
         
-        return back(); // 直前のページへリダイレクト
+        return back();
     }
 
     public function show(ChatMessage $chatMessage)

@@ -50,7 +50,8 @@ class ChatRoomController extends Controller
     
     
     public function show(ChatRoom $chatRoom)
-    {
+    {   
+        
         return view('chat_rooms.show', compact('chatRoom'));
     }
 
@@ -74,4 +75,37 @@ class ChatRoomController extends Controller
         $chatRoom->delete();
         return redirect()->route('chat_rooms.index');
     }
+
+
+    public function createChatRoom(Request $request, $requestId)
+    {
+        $userRequest = UserRequest::findOrFail($requestId);
+
+        // 投稿者はチャットルームを作らない
+        if (Auth::id() === $userRequest->user_ID) {
+            return redirect()->back()->with('error', '投稿者はチャットルームを作成できません。');
+        }
+
+        // **この手伝いユーザー用のチャットルームがあるか**チェック
+        $existingRoom = ChatRoom::where('request_ID', $requestId)
+                            ->where('user_ID', Auth::id())
+                            ->first();
+
+        if ($existingRoom) {
+            return redirect()->route('chat_rooms.show', $existingRoom->chat_room_ID);
+        }
+
+        // **新しい手伝いユーザー用のチャットルームを作成**
+        $chatRoom = ChatRoom::create([
+            'request_ID' => $requestId,
+            'user_ID' => Auth::id(),
+        ]);
+
+        return redirect()->route('chat_rooms.show', $chatRoom->chat_room_ID);
+}
+
+
+
+
+    
 }

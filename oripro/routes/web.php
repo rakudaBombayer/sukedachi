@@ -51,7 +51,6 @@ Route::middleware('auth')->group(function () {
 
 
 
-
 // Userルート
 
 Route::resource('users', UserController::class);
@@ -78,6 +77,7 @@ Route::post('/chat_rooms/goto/{request}', [ChatRoomController::class, 'gotoChat'
 
 Route::resource('chat_rooms.messages', ChatMessageController::class);
 
+Route::post('/chat_rooms/goto/{request}', [ChatRoomController::class, 'goto'])->name('chat_rooms.goto');
 
 
 Route::post('/chat-messages', [ChatMessageController::class, 'store'])->name('chat_messages.store');
