@@ -53,8 +53,7 @@ use Illuminate\Support\Facades\Auth;
 
                 $data = [
                     'user_ID' => Auth::id(), // ★修正：ログインユーザーのIDを自動でセット
-                    // 'help_category_ID' => $request->help_category_ID,
-                    'help_category_ID' => $requestData['help_category_ID'] ?? null,
+                    'help_details' => $requestData['help_details'] ?? '',
                     'title' => $requestData['title'] ?? null,
                     'requested_date' => isset($requestData['requested_date']) ? date('Y-m-d', strtotime($requestData['requested_date'])) : null,
                     'estimated_time' => $requestData['estimated_time'] ?? null,
@@ -67,7 +66,7 @@ use Illuminate\Support\Facades\Auth;
                 // dd($requestModel);
 
 
-                
+                dd($request->all()); 
                 $requestModel = UserRequest::create($data);
 
                  //画像の保存処理↓(あまり理解していないのでもう一度)
@@ -93,7 +92,7 @@ use Illuminate\Support\Facades\Auth;
             } catch (\Exception $e) {
                 Log::error('Image saving error:', ['message' => $e->getMessage()]);
             }
-
+            
                 return redirect()->route('requests.complete', ['request' => $requestModel]);
             }   
                 
