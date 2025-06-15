@@ -39,13 +39,40 @@ class ChatRoomController extends Controller
 
 
     public function gotoChat(Request $request)
-    {
+    {   
+        $requestId = $request->input('request'); // フォームから渡ってくる投稿ID
+        
+        $userRequest = UserRequest::findOrFail($requestId);
+
+        if (Auth::id() === $userRequest->user_ID) {
+        return back()->with('error', '自分自身の投稿にはチャットできません。');
+        }
+        
+         // 既存のチャットルームがある場合はそれを再利用
+        $existingRoom = ChatRoom::where('request_ID', $requestId)
+                            ->where('user_ID', Auth::id())
+                            ->first();
+        
+            if ($existingRoom) {
+            return redirect()->route('chat_rooms.show', $existingRoom->chat_room_ID);
+            }
+
+                // 新しいチャットルームを作成
+            $chatRoom = ChatRoom::create([
+            'request_ID' => $requestId,
+            'user_ID' => Auth::id(),
+            'isOpen' => true,
+            ]);
+                            
         // 直前に表示していた依頼のIDをセッションに保存
         Session::put('previous_request_id', $request->request);
 
 
         // チャットルーム一覧画面へリダイレクト
-        return redirect()->route('chat_rooms.index');
+        // return redirect()->route('chat_rooms.index');
+
+         return redirect()->route('chat_rooms.show', $chatRoom->chat_room_ID)
+                     ->with('success', 'チャットルームを作成しました');
     }
     
     

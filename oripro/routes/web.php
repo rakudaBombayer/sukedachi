@@ -79,6 +79,9 @@ Route::resource('chat_rooms.messages', ChatMessageController::class);
 
 Route::post('/chat_rooms/goto/{request}', [ChatRoomController::class, 'goto'])->name('chat_rooms.goto');
 
+// POST /chat_rooms/goto
+Route::post('/chat_rooms/goto', [ChatRoomController::class, 'gotoChat'])->name('chat_rooms.goto');
+
 
 Route::post('/chat-messages', [ChatMessageController::class, 'store'])->name('chat_messages.store');
 
