@@ -53,6 +53,7 @@ use Illuminate\Support\Facades\Auth;
 
                 $data = [
                     'user_ID' => Auth::id(), // ★修正：ログインユーザーのIDを自動でセット
+                    'help_category_ID' => intval($request->input('help_category_ID')), // ここに追加
                     'help_details' => $requestData['help_details'] ?? '',
                     'title' => $requestData['title'] ?? null,
                     'requested_date' => isset($requestData['requested_date']) ? date('Y-m-d', strtotime($requestData['requested_date'])) : null,
@@ -66,7 +67,7 @@ use Illuminate\Support\Facades\Auth;
                 // dd($requestModel);
 
 
-                dd($request->all()); 
+                // dd($request->all()); 
                 $requestModel = UserRequest::create($data);
 
                  //画像の保存処理↓(あまり理解していないのでもう一度)

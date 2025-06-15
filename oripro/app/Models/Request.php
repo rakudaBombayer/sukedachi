@@ -16,6 +16,7 @@ class Request extends Model
     protected $fillable = [
         'user_ID', 
         'help_category_ID', 
+        'help_details',
         'title', 
         'requested_date',
         'image_ID', 
