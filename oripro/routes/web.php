@@ -85,6 +85,9 @@ Route::post('/chat_rooms/goto', [ChatRoomController::class, 'gotoChat'])->name('
 
 Route::post('/chat-messages', [ChatMessageController::class, 'store'])->name('chat_messages.store');
 
+Route::get('/chat_messages/{chatRoomId}', [ChatMessageController::class, 'index'])->name('chat_messages.index');
+
+
 
 
 // Requestルート

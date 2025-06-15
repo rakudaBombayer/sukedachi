@@ -11,11 +11,16 @@
 
     <h1>スケダチ</h1>
     <div>ちゃっとるーむへようこそ</div>
+    <p>デバッグ: chatRoomId = {{ $chatRoomId ?? '未設定' }}</p>
+
+    @if(session('success'))
+    <p style="color: green;">{{ session('success') }}</p>
+    @endif
 
     <form method="POST" action="{{ route('chat_messages.store') }}">
         @csrf
         {{-- 固定の chat_room_ID を設定 --}}
-        <input type="hidden" name="chat_room_ID" value="1"> {{-- 仮のID: 1 --}}
+        <input type="hidden" name="chat_room_ID" value="{{ $chatRoomId }}">
         <input type="hidden" name="user_ID" value="{{ Auth::id() }}">
         <div>
             <label for="text">チャットメッセージ</label>
@@ -24,7 +29,16 @@
         <button type="submit">送信</button>
     </form>
 
-    <button><a href="{{ url()->previous() }}">戻る</a></button>
+    {{-- <button><a href="{{ url()->previous() }}">戻る</a></button> --}}
+    {{-- <button><a href="{{ route('requests.show', $previousRequestId) }}">依頼詳細へ戻る</a></button> --}}
+    <p>デバッグ: previousRequestId = {{ $previousRequestId ?? '未設定' }}</p>
+
+    @if(isset($previousRequestId))
+    <button><a href="{{ route('requests.show', $previousRequestId) }}">依頼詳細へ戻る</a></button>
+    @else
+        <button disabled>依頼詳細へ戻る</button> {{-- エラー回避用の表示 --}}
+    @endif
+
 
     <hr>
 

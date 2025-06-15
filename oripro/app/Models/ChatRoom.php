@@ -11,7 +11,7 @@ class ChatRoom extends Model
     
     protected $table = 'chat_rooms';
     protected $primaryKey = 'chat_room_ID';
-    protected $fillable = ['chat_room_ID','user_ID'];
+    protected $fillable = ['chat_room_ID', 'user_ID', 'request_ID', 'isOpen'];
 
 
     public function messages()

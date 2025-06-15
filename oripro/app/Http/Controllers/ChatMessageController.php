@@ -9,10 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ChatMessageController extends Controller
 {
-    public function index()
+    public function index(Request $request, $chatRoomId)
     {
-        $chatMessages = ChatMessage::all();
-        return view('chat_messages.index', compact('chatMessages'));
+    // 🔹 指定されたチャットルームのメッセージを取得
+        $chatMessages = ChatMessage::where('chat_room_ID', $chatRoomId)->latest()->get();
+
+        return view('chat_messages.index', compact('chatMessages', 'chatRoomId'));
     }
 
     public function create()
@@ -24,8 +26,8 @@ class ChatMessageController extends Controller
     {
 
         $request->validate([
-        'chat_room_ID' => 'required|exists:chat_rooms,chat_room_ID',
-        'text' => 'required|string',
+        'chat_room_ID' => 'required|integer|exists:chat_rooms,chat_room_ID',
+        'text' => 'required|string|max:500',
     ]);
         
         ChatMessage::create([
@@ -34,7 +36,9 @@ class ChatMessageController extends Controller
             'text' => $request->input('text'),
         ]);
         
-        return back();
+        // return back()->with('success', 'メッセージを送信しました');
+        return redirect()->route('chat_rooms.index', $request->chat_room_ID)->with('success', 'メッセージを送信しました');
+
     }
 
     public function show(ChatMessage $chatMessage)

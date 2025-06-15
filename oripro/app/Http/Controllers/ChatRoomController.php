@@ -12,14 +12,28 @@ use Illuminate\Support\Facades\Auth;
 
 class ChatRoomController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $chatRooms = ChatRoom::all();
-        $previousRequestId = Session::get('previous_request_id'); // セッションから前の依頼IDを取得
-
-        $chatMessages = ChatMessage::where('chat_room_ID', 1)->get();
+        $previousRequestId = Session::get('previous_request_id', null);
         
-        return view('chat_rooms.index', compact('chatRooms', 'previousRequestId', 'chatMessages')); 
+        // $previousRequestId = Session::get('previous_request_id', null);
+        $chatRoom = $chatRooms->first();
+        
+        // $chatRoomId = $request->query('chat_room_ID', $chatRooms->first()->chat_room_ID ?? null); 
+
+          if (!$chatRoom) {
+            return redirect()->back()->with('error', 'チャットルームが存在しません');
+        }
+
+        // $chatMessages = ChatMessage::where('chat_room_ID', $chatRoomId)->latest()->get();
+        $chatMessages = ChatMessage::where('chat_room_ID', $chatRoom->chat_room_ID)->latest()->get();
+        // $chatMessages = $chatRooms->isNotEmpty()
+        // ? ChatMessage::whereIn('chat_room_ID', $chatRooms->pluck('chat_room_ID'))->get()
+        // : collect();
+        
+        return view('chat_rooms.index', compact('chatRooms', 'previousRequestId', 'chatMessages', 'chatRoom'));
+        // return view('chat_rooms.index', compact('chatRooms', 'previousRequestId', 'chatMessages', 'chatRoomId'));
     }
 
     public function create()
@@ -40,12 +54,19 @@ class ChatRoomController extends Controller
 
     public function gotoChat(Request $request)
     {   
-        $requestId = $request->input('request'); // フォームから渡ってくる投稿ID
+
+        $request->validate([
+        'request_ID' => 'required|integer|exists:requests,request_ID',
+        ]);
+        
+        $requestId = intval($request->input('request_ID'));
         
         $userRequest = UserRequest::findOrFail($requestId);
 
+
+        
         if (Auth::id() === $userRequest->user_ID) {
-        return back()->with('error', '自分自身の投稿にはチャットできません。');
+            return back()->with('error', '自分自身の投稿にはチャットできません。');
         }
         
          // 既存のチャットルームがある場合はそれを再利用
@@ -57,29 +78,50 @@ class ChatRoomController extends Controller
             return redirect()->route('chat_rooms.show', $existingRoom->chat_room_ID);
             }
 
+            // dd($requestId, gettype($requestId));
                 // 新しいチャットルームを作成
-            $chatRoom = ChatRoom::create([
-            'request_ID' => $requestId,
-            'user_ID' => Auth::id(),
-            'isOpen' => true,
-            ]);
+            
+            // $chatRoom = ChatRoom::create([
+            // 'request_ID' => $requestId,
+            // 'user_ID' => Auth::id(),
+            // 'isOpen' => true,
+            // ]);
+            // dd($chatRoom);
+
+
+             // 🔹 **新しいチャットルームのデータをデバッグ**
+            $chatRoomData = [
+                'request_ID' => $requestId,
+                'user_ID' => Auth::id(),
+                'isOpen' => true,
+            ];
+            // dd($chatRoomData);
+            // dd(ChatRoom::create($chatRoomData));
+
+            // 🔹 **新しいチャットルームを作成**
+            $chatRoom = ChatRoom::create($chatRoomData);
+            
+            
                             
         // 直前に表示していた依頼のIDをセッションに保存
-        Session::put('previous_request_id', $request->request);
-
+        // Session::put('previous_request_id', $request->request);
+        Session::put('previous_request_id', $requestId);
+        
+        // dd(Session::get('previous_request_id')); 
 
         // チャットルーム一覧画面へリダイレクト
         // return redirect()->route('chat_rooms.index');
-
-         return redirect()->route('chat_rooms.show', $chatRoom->chat_room_ID)
+        
+        return redirect()->route('chat_rooms.show', $chatRoom->chat_room_ID)
                      ->with('success', 'チャットルームを作成しました');
     }
     
     
     public function show(ChatRoom $chatRoom)
     {   
+        $chatMessages = ChatMessage::where('chat_room_ID', $chatRoom->chat_room_ID)->get();
         
-        return view('chat_rooms.show', compact('chatRoom'));
+        return view('chat_rooms.index', compact('chatRoom', 'chatMessages'));
     }
 
     public function edit(ChatRoom $chatRoom)

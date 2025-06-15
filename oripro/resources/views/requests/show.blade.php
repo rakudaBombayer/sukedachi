@@ -11,7 +11,8 @@
     <body>
     <h1>依頼詳細</h1>
 
-    <form method="POST" action="{{ route('chat_rooms.goto', $request->request_ID) }}">
+    {{-- <form method="POST" action="{{ route('chat_rooms.goto', $request->request_ID) }}"> --}}
+    <form method="POST" action="{{ route('chat_rooms.goto') }}">
       @csrf
 
 
@@ -19,7 +20,7 @@
     @if (Auth::id() !== $request->user_ID)
         <form method="POST" action="{{ route('chat_rooms.goto', $request->request_ID) }}">
             @csrf
-            <input type="hidden" name="request" value="{{ $request->request_ID }}">
+            <input type="hidden" name="request_ID" value="{{ $request->request_ID }}">
             <button type="submit">手伝う</button>
         </form>
         @endif
