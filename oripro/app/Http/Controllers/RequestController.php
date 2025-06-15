@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth; 
 
 
+
     class RequestController extends Controller 
     { 
 
@@ -36,7 +37,11 @@ use Illuminate\Support\Facades\Auth;
         
         public function create() 
         { 
-            return view('requests/create'); 
+            
+                $helpCategories = UserRequest::select('help_category_ID', 'title')->distinct()->get();
+                return view('requests.create', compact('helpCategories'));
+            
+            // return view('requests/create'); 
         }
             
         public function store(Request $request)
@@ -113,7 +118,7 @@ use Illuminate\Support\Facades\Auth;
             }
 
             // ★追加: ヘルプカテゴリのデータを取得してビューに渡す
-            $helpCategories = HelpCategory::all();
+            $helpCategories = UserRequest::select('help_category_ID', 'title')->distinct()->get();
             
             // return view('requests.edit', compact('request')); 
             return view('requests.edit', compact('request', 'helpCategories')); // ★修正: helpCategoriesも渡す
@@ -137,7 +142,11 @@ use Illuminate\Support\Facades\Auth;
                 abort(403, 'Unauthorized action.');
             }
             
-            $request->validate([ 'user_ID' => 'required|exists:users,user_ID', 'help_category_ID' => 'required|exists:help_categories,help_category_ID', ]);
+            $request->validate([
+            'user_ID' => 'required|exists:users,user_ID', 
+            'help_category_ID' => 'required|exists:requests,help_category_ID', // `requests` テーブルに変更
+            ]);
+
 
             $userRequest->update($request->except(['image'])); // 画像以外のデータを更新
 

@@ -37,14 +37,14 @@ class Request extends Model
         return $this->belongsTo(User::class, 'user_ID');
     }
 
-    public function helpCategory()
-    {
-        return $this->hasMany(HelpCategory::class, 'help_category_ID');
-    }
+    // public function helpCategory()
+    // {
+    //     return $this->belongsTo(HelpCategory::class, 'help_category_ID');
+    // }
 
     public function image()
     {
-        return $this->belongsTo(Image::class, 'image_ID', 'image_ID');
+        return $this->belongsTo(Image::class, 'image_ID');
     }
 
     public function payment()

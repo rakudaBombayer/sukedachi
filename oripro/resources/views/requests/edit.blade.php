@@ -31,9 +31,10 @@
         <div>
             <label for="help_category_ID">お手伝い種類</label>
             <select id="help_category_ID" name="help_category_ID" required>
-                <option value="">カテゴリを選択してください</option>
-                {{-- $helpCategories がコントローラーから渡されている必要があります --}}
-                {{-- RequestController@edit メソッドにも helpCategories を渡すように修正が必要になる可能性があります --}}
+                <option value="1">送迎</option>
+                <option value="2">手伝い</option>
+                <option value="3">買い物</option>
+                <option value="4">その他</option>
                 @foreach($helpCategories as $category)
                     <option value="{{ $category->help_category_ID }}"
                         {{ (old('help_category_ID', $request->help_category_ID) == $category->help_category_ID) ? 'selected' : '' }}>
