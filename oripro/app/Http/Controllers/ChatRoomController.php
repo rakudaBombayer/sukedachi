@@ -32,7 +32,7 @@ class ChatRoomController extends Controller
         // ? ChatMessage::whereIn('chat_room_ID', $chatRooms->pluck('chat_room_ID'))->get()
         // : collect();
         
-        return view('chat_rooms.index', compact('chatRooms', 'previousRequestId', 'chatMessages', 'chatRoom'));
+        return view('chat_rooms.index', compact('chatRooms', 'previousRequestId', 'chatMessages', 'chatRoom', 'chatRoomId'));
         // return view('chat_rooms.index', compact('chatRooms', 'previousRequestId', 'chatMessages', 'chatRoomId'));
     }
 

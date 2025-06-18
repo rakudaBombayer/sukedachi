@@ -103,8 +103,24 @@ use Illuminate\Support\Facades\Auth;
             }   
                 
         public function show(UserRequest $request) 
-        {
-            return view('requests.show', compact('request')); 
+        {   
+            
+            // 🔹 指定されたリクエストを取得
+        $userRequest = UserRequest::findOrFail($request->request_ID);
+
+
+            $helpCategoryMap = [
+                1 => '送迎',
+                2 => '手伝い',
+                3 => '買い物',
+                4 => 'その他',
+            ];
+
+            $helpCategory = $helpCategoryMap[$userRequest->help_category_ID] ?? '未設定';
+
+
+            
+            return view('requests.show', compact('request','userRequest', 'helpCategory')); 
         } 
         
         public function edit(UserRequest $request) 
@@ -223,7 +239,23 @@ use Illuminate\Support\Facades\Auth;
             // ここに追加
         public function complete(\App\Models\Request $request)
         {
+            $userRequest = UserRequest::findOrFail($request->request_ID);
+
+            // 🔹 **カテゴリIDに応じた名前を設定**
+            $helpCategoryMap = [
+                1 => '送迎',
+                2 => '手伝い',
+                3 => '買い物',
+                4 => 'その他',
+            ];
+
+            $helpCategory = $helpCategoryMap[$userRequest->help_category_ID] ?? '未設定';
+
+        return view('requests.complete', compact('request', 'userRequest', 'helpCategory'));
+
+
+            
         // 投稿完了画面のロジックを記述
-            return view('requests.complete', ['request' => $request]);
+            // return view('requests.complete', ['request' => $request]);
         }
     }

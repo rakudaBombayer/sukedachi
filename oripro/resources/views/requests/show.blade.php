@@ -36,13 +36,12 @@
     </div>
 
     <div>
-        <strong>お手伝い種類:</strong> {{ $request->help_name }}
+        <strong>お手伝い種類:</strong> {{ $request->help_category_ID }}
+        <strong>お手伝い種類:</strong> {{ $helpCategory }}
     </div>
 
     <div>
         <strong>お手伝い詳細:</strong> <pre>{{ $request->help_details }}</pre>
-    </div>
-
     <div>
         <strong>希望日時:</strong> {{ $request->requested_date }}
     </div>

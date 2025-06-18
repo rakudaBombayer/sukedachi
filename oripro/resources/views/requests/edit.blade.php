@@ -35,12 +35,7 @@
                 <option value="2">手伝い</option>
                 <option value="3">買い物</option>
                 <option value="4">その他</option>
-                @foreach($helpCategories as $category)
-                    <option value="{{ $category->help_category_ID }}"
-                        {{ (old('help_category_ID', $request->help_category_ID) == $category->help_category_ID) ? 'selected' : '' }}>
-                        {{ $category->help_name }}
-                    </option>
-                @endforeach
+
             </select>
             @error('help_category_ID')
                 <p style="color: red;">{{ $message }}</p>

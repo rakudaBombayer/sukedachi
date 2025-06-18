@@ -14,7 +14,8 @@
     <h2>投稿内容</h2>
     <ul>
         <li>タイトル: {{ $request->title }}</li>
-        <li>お手伝い種類: {{ $request->help_name }}</li>
+        <li>お手伝い種類: {{ $request->help_category_ID }}</li>
+        <li>お手伝い種類: {{ $helpCategory }}</li>
         <li>お手伝い詳細: {{ $request->help_details }}</li>
         <li>希望日、希望時間: {{ $request->requested_date }}</li>
         
