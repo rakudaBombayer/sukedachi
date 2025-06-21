@@ -70,6 +70,8 @@
 @auth
     {{-- ログインユーザーが依頼の投稿者である場合のみ、編集・削除ボタンを表示 --}}
     @if (Auth::id() === $request->user_ID)
+    <div style="margin-top: 20px;"><a href="{{ route('requests.select', $request->request_ID) }}" style="padding: 8px 15px; background-color: #be1ecc; color: white; text-decoration: none; border-radius: 5px;">選定ページへ</a></div>
+
         <div style="margin-top: 20px;">
             {{-- 編集ボタン --}}
             <a href="{{ route('requests.edit', $request->request_ID) }}" style="padding: 8px 15px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">

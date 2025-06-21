@@ -258,4 +258,14 @@ use Illuminate\Support\Facades\Auth;
         // 投稿完了画面のロジックを記述
             // return view('requests.complete', ['request' => $request]);
         }
+
+        public function select(Request $request, $requestId)
+        {
+        $userRequest = UserRequest::findOrFail($requestId);
+
+        
+        $helpCategory = $categoryMap[$userRequest->help_category_ID] ?? '未設定';
+
+        return view('requests.selection', compact('userRequest', 'helpCategory'));
+}
     }

@@ -62,6 +62,11 @@ Route::resource('users', UserController::class);
 Route::get('/', [YourHomeController::class, 'index'])->name('index');
 
 
+//ChatRoom選定ページへ
+
+// web.php
+Route::get('/requests/{request}/selection', [RequestController::class, 'select'])->name('requests.select');
+
 
 // ChatRoomルート
 
