@@ -2,7 +2,6 @@
 
 https://github.com/rakudaBombayer/requirements3
 
-paymentテーブルを削除しないといけない。
 
 
 ユーザーと課題が定義されて、ユーザーの課題を解決するものになっている
