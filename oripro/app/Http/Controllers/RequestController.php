@@ -261,10 +261,23 @@ use Illuminate\Support\Facades\Auth;
 
         public function select(Request $request, $requestId)
         {
-        $userRequest = UserRequest::findOrFail($requestId);
+        
+        $userRequest = UserRequest::with(['applicants.user'])->findOrFail($requestId);
+        // $userRequest = UserRequest::findOrFail($requestId);
+        
+
+        //ヘルプカテゴリーIDを使うかどうか検討中↓
+        $categoryMap = [
+        1 => '送迎',
+        2 => '手伝い',
+        3 => '買い物',
+        4 => 'その他',
+    ];
 
         
         $helpCategory = $categoryMap[$userRequest->help_category_ID] ?? '未設定';
+        
+
 
         return view('requests.selection', compact('userRequest', 'helpCategory'));
 }
