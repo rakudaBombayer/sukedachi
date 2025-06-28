@@ -72,6 +72,9 @@ class ChatRoomController extends Controller
 
     public function goto($requestId)
 {
+    
+    Session::put('previous_request_id', $requestId);
+    
     // 例: チャットルームがあれば表示、なければ作るなど
     $chatRoom = ChatRoom::where('request_ID', $requestId)
                         ->where('user_ID', Auth::id())
@@ -162,11 +165,17 @@ class ChatRoomController extends Controller
     
     public function show(ChatRoom $chatRoom)
     {   
+       if (!Session::has('previous_request_id') && $chatRoom->request_ID) {
+        Session::put('previous_request_id', $chatRoom->request_ID);
+        }
+
+        $previousRequestId = Session::get('previous_request_id');
+        
         $chatMessages = ChatMessage::where('chat_room_ID', $chatRoom->chat_room_ID)->get();
 
         $chatRoomId = $chatRoom->chat_room_ID;
         
-        return view('chat_rooms.index', compact('chatRoom', 'chatMessages', 'chatRoomId'));
+        return view('chat_rooms.index', compact('chatRoom', 'chatMessages', 'chatRoomId','previousRequestId'));
     }
 
     public function edit(ChatRoom $chatRoom)

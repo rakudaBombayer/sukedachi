@@ -35,10 +35,12 @@
 
     @if(isset($previousRequestId))
     <button><a href="{{ route('requests.show', $previousRequestId) }}">依頼詳細へ戻る</a></button>
-    
+
     @else
         <button disabled>依頼詳細へ戻る</button> {{-- エラー回避用の表示 --}}
     @endif
+
+    
 
 
     <hr>
