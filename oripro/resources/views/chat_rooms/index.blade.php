@@ -35,6 +35,7 @@
 
     @if(isset($previousRequestId))
     <button><a href="{{ route('requests.show', $previousRequestId) }}">依頼詳細へ戻る</a></button>
+    
     @else
         <button disabled>依頼詳細へ戻る</button> {{-- エラー回避用の表示 --}}
     @endif
@@ -46,7 +47,9 @@
         <h3>チャットログ</h3>
         <ul>
             @foreach ($chatMessages as $message)
+                @if ($message->chat_room_ID == $chatRoomId)
                 <li>{{ $message->text }} (投稿者ID: {{ $message->user_ID }})</li>
+                @endif
             @endforeach
         </ul>
     </div>

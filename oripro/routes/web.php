@@ -95,11 +95,17 @@ Route::get('/chat_rooms/goto/{request}', [ChatRoomController::class, 'goto'])->n
 
 
 
-Route::post('/chat-messages', [ChatMessageController::class, 'store'])->name('chat_messages.store');
+Route::post('/chat-messages', [ChatMessageController::class, 'store'])
+                    ->middleware('auth') 
+                    ->name('chat_messages.store');
 
 Route::get('/chat_messages/{chatRoomId}', [ChatMessageController::class, 'index'])->name('chat_messages.index');
 
 
+//重複しているかも↓
+Route::get('/chat_rooms/{chatRoom}', [ChatRoomController::class, 'show'])->name('chat_rooms.show');
+//重複しているかも↓
+Route::post('/chat_rooms', [ChatRoomController::class, 'store'])->name('chat_rooms.store');
 
 
 // Requestルート
@@ -115,7 +121,7 @@ Route::get('/requests/{request}/edit', [RequestController::class, 'edit'])->name
 // Route::put('/requests/{request}', [RequestController::class, 'update'])->name('requests.update');
 
 
-Route::post('/requests', [RequestController::class, 'store'])->name('requests.store');
+// Route::post('/requests', [RequestController::class, 'store'])->name('requests.store');
 
 // Route::put('/requests/{request}', [RequestController::class, 'update'])->name('requests.update');
 

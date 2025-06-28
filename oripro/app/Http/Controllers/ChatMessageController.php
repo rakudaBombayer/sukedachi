@@ -24,7 +24,10 @@ class ChatMessageController extends Controller
 
     public function store(Request $request)
     {
-
+        if (!Auth::check()) {
+        return redirect()->route('login')->with('error', 'ログインしてください');
+        }
+        
         $request->validate([
         'chat_room_ID' => 'required|integer|exists:chat_rooms,chat_room_ID',
         'text' => 'required|string|max:500',
@@ -37,13 +40,25 @@ class ChatMessageController extends Controller
         ]);
         
         // return back()->with('success', 'メッセージを送信しました');
-        return redirect()->route('chat_rooms.index', $request->chat_room_ID)->with('success', 'メッセージを送信しました');
+        // return redirect()->route('chat_rooms.index', $request->chat_room_ID)->with('success', 'メッセージを送信しました');
+
+        return redirect()->route('chat_rooms.show', ['chatRoom' => $request->input('chat_room_ID')])
+                 ->with('success', 'メッセージを送信しました');
 
     }
 
     public function show(ChatMessage $chatMessage)
     {
-        return view('chat_messages.show', compact('chatMessage'));
+        // return view('chat_messages.show', compact('chatMessage'));
+        // return redirect()->route('chat_rooms.show', $chatRoomId);
+        // return redirect()->route('chat_rooms.show', $request->input('chat_room_ID'));
+        
+        // 送信後に正しいチャットルームに戻る
+        return redirect()->route('chat_rooms.show', $request->input('chat_room_ID'))
+                 ->with('success', 'メッセージを送信しました');
+
+
+
     }
 
     public function edit(ChatMessage $chatMessage)

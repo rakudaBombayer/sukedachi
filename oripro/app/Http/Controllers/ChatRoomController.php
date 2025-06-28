@@ -17,10 +17,18 @@ class ChatRoomController extends Controller
         $chatRooms = ChatRoom::all();
         $previousRequestId = Session::get('previous_request_id', null);
         
-        // 🔹 chatRoomId を明示的に定義！
-        $chatRoomId = $request->query('chat_room_ID', $chatRooms->first()->chat_room_ID ?? null);
-        // $previousRequestId = Session::get('previous_request_id', null);
-        $chatRoom = $chatRooms->first();
+         // 🔧 URLのクエリパラメータから chat_room_ID を取得
+        $chatRoomId = $request->query('chat_room_ID');
+
+         // 🔎 該当するチャットルームを取得
+        $chatRoom = $chatRoomId
+        ? ChatRoom::find($chatRoomId)
+        : $chatRooms->first();
+        
+        // // 🔹 chatRoomId を明示的に定義！
+        // $chatRoomId = $request->query('chat_room_ID', $chatRooms->first()->chat_room_ID ?? null);
+        // // $previousRequestId = Session::get('previous_request_id', null);
+        // $chatRoom = $chatRooms->first();
         
         // $chatRoomId = $request->query('chat_room_ID', $chatRooms->first()->chat_room_ID ?? null); 
 
@@ -28,8 +36,13 @@ class ChatRoomController extends Controller
             return redirect()->back()->with('error', 'チャットルームが存在しません');
         }
 
+        $chatMessages = ChatMessage::where('chat_room_ID', $chatRoom->chat_room_ID)
+                               ->orderBy('created_at')
+                               ->get();
+
+        
         // $chatMessages = ChatMessage::where('chat_room_ID', $chatRoomId)->latest()->get();
-        $chatMessages = ChatMessage::where('chat_room_ID', $chatRoom->chat_room_ID)->latest()->get();
+        // $chatMessages = ChatMessage::where('chat_room_ID', $chatRoom->chat_room_ID)->latest()->get();
         // $chatMessages = $chatRooms->isNotEmpty()
         // ? ChatMessage::whereIn('chat_room_ID', $chatRooms->pluck('chat_room_ID'))->get()
         // : collect();
@@ -50,7 +63,10 @@ class ChatRoomController extends Controller
         ]);
 
         ChatRoom::create($request->all());
-        return redirect()->route('chat_rooms.index');
+        // return redirect()->route('chat_rooms.index');
+        // return redirect()->route('chat_rooms.show', $chatRoomId); // ✅ これが正解！
+        return redirect()->route('chat_rooms.show', $chatRoom->chat_room_ID);
+
     }
     
 
