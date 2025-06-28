@@ -17,6 +17,8 @@ class ChatRoomController extends Controller
         $chatRooms = ChatRoom::all();
         $previousRequestId = Session::get('previous_request_id', null);
         
+        // 🔹 chatRoomId を明示的に定義！
+        $chatRoomId = $request->query('chat_room_ID', $chatRooms->first()->chat_room_ID ?? null);
         // $previousRequestId = Session::get('previous_request_id', null);
         $chatRoom = $chatRooms->first();
         
@@ -50,6 +52,30 @@ class ChatRoomController extends Controller
         ChatRoom::create($request->all());
         return redirect()->route('chat_rooms.index');
     }
+    
+
+    public function goto($requestId)
+{
+    // 例: チャットルームがあれば表示、なければ作るなど
+    $chatRoom = ChatRoom::where('request_ID', $requestId)
+                        ->where('user_ID', Auth::id())
+                        ->first();
+
+    if (!$chatRoom) {
+        $chatRoom = ChatRoom::create([
+            'request_ID' => $requestId,
+            'user_ID' => Auth::id(),
+            'isOpen' => true,
+        ]);
+    }
+
+    return redirect()->route('chat_rooms.show', $chatRoom->chat_room_ID);
+}
+
+
+
+
+    
 
 
     public function gotoChat(Request $request)
@@ -114,14 +140,17 @@ class ChatRoomController extends Controller
         
         return redirect()->route('chat_rooms.show', $chatRoom->chat_room_ID)
                      ->with('success', 'チャットルームを作成しました');
+        
     }
     
     
     public function show(ChatRoom $chatRoom)
     {   
         $chatMessages = ChatMessage::where('chat_room_ID', $chatRoom->chat_room_ID)->get();
+
+        $chatRoomId = $chatRoom->chat_room_ID;
         
-        return view('chat_rooms.index', compact('chatRoom', 'chatMessages'));
+        return view('chat_rooms.index', compact('chatRoom', 'chatMessages', 'chatRoomId'));
     }
 
     public function edit(ChatRoom $chatRoom)

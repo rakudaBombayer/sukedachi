@@ -12,10 +12,8 @@
     <h1>依頼詳細</h1>
 
     {{-- <form method="POST" action="{{ route('chat_rooms.goto', $request->request_ID) }}"> --}}
-    <form method="POST" action="{{ route('chat_rooms.goto') }}">
+    {{-- <form method="POST" action="{{ route('chat_rooms.goto') }}">
       @csrf
-
-
       @auth
     @if (Auth::id() !== $request->user_ID)
         <form method="POST" action="{{ route('chat_rooms.goto', $request->request_ID) }}">
@@ -25,11 +23,20 @@
         </form>
         @endif
     @endauth
-
-
-
-
-  </form>
+  </form> --}}
+@auth
+    @if (Auth::id() !== $request->user_ID)
+        {{-- <form method="POST" action="{{ route('chat_rooms.goto', $request->request_ID) }}"> --}}
+        <form method="POST" action="{{ route('applicants.store') }}">
+            @csrf
+            <input type="hidden" name="request_ID" value="{{ $request->request_ID }}">
+            <input type="hidden" name="user_ID" value="{{ Auth::id() }}"> 
+            <button type="submit">手伝う</button>
+        </form>
+    @endif
+    @else
+    <p><a href="{{ route('login') }}">ログインして応募する</a></p>
+@endauth
 
     <div>
         <strong>タイトル:</strong> {{ $request->title }}

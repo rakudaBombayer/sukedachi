@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Applicant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ApplicantController extends Controller
 {
@@ -18,15 +19,50 @@ class ApplicantController extends Controller
         return view('applicants.create');
     }
 
+    
     public function store(Request $request)
     {
+
+
         $request->validate([
             'user_ID' => 'required|exists:users,user_ID',
             'request_ID' => 'required|exists:requests,request_ID',
         ]);
 
-        Applicant::create($request->all());
-        return redirect()->route('applicants.index');
+        
+        $already = Applicant::where('request_ID', $request->request_ID)
+        ->where('user_ID', Auth::id())
+        ->exists();
+
+
+        //  dd('step 3: already = ' . ($already ? 'yes' : 'no'));
+
+        
+    //     if ($already) {
+    //     return back()->with('error', 'すでに応募済みです');
+    // }   
+
+        if ($already) {
+    return redirect()->route('chat_rooms.goto.get', ['request' => $request->request_ID])
+        ->with('info', 'すでに応募済みのためチャットに移動しました');
+}
+
+
+        // Applicant::create($request->all());
+
+        Applicant::create([
+        'request_ID' => $request->request_ID,
+        'user_ID' => Auth::id(),
+    ]);
+        // return redirect()->route('applicants.index');
+        // return back()->with('success', '応募が完了しました！');
+        // ⭐ ChatRoom に遷移
+        // return redirect()->route('chat_rooms.goto', ['request' => $request->request_ID]);
+
+        // dd('step 4: created. now redirecting');
+        
+        return redirect()->route('chat_rooms.goto.get', ['request' => $request->request_ID]);
+        
     }
 
     public function show(Applicant $applicant)

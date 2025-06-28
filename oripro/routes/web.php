@@ -74,7 +74,7 @@ Route::resource('chat_rooms', ChatRoomController::class);
 
 
 
-Route::post('/chat_rooms/goto/{request}', [ChatRoomController::class, 'gotoChat'])->name('chat_rooms.goto');
+
 
 
 
@@ -82,10 +82,17 @@ Route::post('/chat_rooms/goto/{request}', [ChatRoomController::class, 'gotoChat'
 
 Route::resource('chat_rooms.messages', ChatMessageController::class);
 
-Route::post('/chat_rooms/goto/{request}', [ChatRoomController::class, 'goto'])->name('chat_rooms.goto');
+// Route::post('/chat_rooms/goto/{request}', [ChatRoomController::class, 'goto'])->name('chat_rooms.goto');
+// Route::get('/chat_rooms/goto/{request}', [ChatRoomController::class, 'goto'])->name('chat_rooms.goto');
 
 // POST /chat_rooms/goto
-Route::post('/chat_rooms/goto', [ChatRoomController::class, 'gotoChat'])->name('chat_rooms.goto');
+// Route::post('/chat_rooms/goto', [ChatRoomController::class, 'gotoChat'])->name('chat_rooms.goto');
+
+// Route::post('/chat_rooms/goto/{request}', [ChatRoomController::class, 'gotoChat'])->name('chat_rooms.goto');
+
+Route::post('/chat_rooms/goto/{request}', [ChatRoomController::class, 'gotoChat'])->name('chat_rooms.goto.post');
+Route::get('/chat_rooms/goto/{request}', [ChatRoomController::class, 'goto'])->name('chat_rooms.goto.get');
+
 
 
 Route::post('/chat-messages', [ChatMessageController::class, 'store'])->name('chat_messages.store');
@@ -117,6 +124,10 @@ Route::post('/requests', [RequestController::class, 'store'])->name('requests.st
 
 Route::resource('applicants', ApplicantController::class);
 
+// Route::post('/applicants', [ApplicantController::class, 'store'])->name('applicants.store');
+
+Route::post('/chat_rooms/goto/{request}', [ChatRoomController::class, 'goto'])
+    ->name('chat_rooms.goto');
 
 
 // HelpCategoryルート
