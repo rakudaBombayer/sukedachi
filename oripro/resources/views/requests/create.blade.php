@@ -66,4 +66,19 @@
     </form>
     <button><a href="{{ route('index') }}">戻る</a></button>
 </body>
+
+{{-- 今日以前をカレンダーで選べなくした。 ↓--}}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const input = document.getElementById('requested_date');
+
+        const now = new Date();
+        now.setSeconds(0, 0); // 秒以下は切り捨て（Chromeの入力精度と合わせるため）
+
+        // 日時を "YYYY-MM-DDTHH:MM" に整形
+        const formatted = now.toISOString().slice(0,16);
+        input.min = formatted;
+    });
+</script>
+
 {{-- @endsection --}}
