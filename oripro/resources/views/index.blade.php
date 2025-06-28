@@ -9,6 +9,11 @@
 </head>
 <body>
 
+    <img
+  class="fit-picture"
+  src="{{ asset('images/hand_kari.png') }}"
+  alt="手の仮画像" />
+
     <h1></h1>
     <p>これは閲覧画面画面</p>
     <nav>
