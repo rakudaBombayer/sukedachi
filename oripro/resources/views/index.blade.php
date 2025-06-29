@@ -18,8 +18,12 @@
     <p>これは閲覧画面画面</p>
     <nav>
         <ul>
-            <li><a href="{{ route('requests.create') }}" style="color: red;">手伝って</a></li>
 
+            @auth
+                <li><a href="{{ route('requests.create') }}" class="text-red-600">手伝って</a></li>
+            @else
+                <li><a href="{{ route('login') }}" class="text-red-600">手伝って</a></li>
+            @endauth
 
             @auth
                 <p>ようこそ、{{ Auth::user()->nickname }} さん！</p>

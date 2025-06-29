@@ -24,7 +24,6 @@ use App\Http\Controllers\ImageController;
 use App\Http\Controllers\YourHomeController;
 
 
-
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -35,8 +34,12 @@ use App\Http\Controllers\YourHomeController;
 
 Route::post('/requests', [RequestController::class, 'store'])->name('requests.store');
 
-Route::get('/requests/create', [RequestController::class, 'create'])->name('requests.create');
+Route::get('/requests/create', [RequestController::class, 'create'])
+                    ->middleware('auth')
+                    ->name('requests.create');
+                    
 
+            
 
 Route::get('/dashboard', function () {
     return view('dashboard');
