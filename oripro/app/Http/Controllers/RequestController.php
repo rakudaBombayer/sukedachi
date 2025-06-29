@@ -17,9 +17,9 @@ use Illuminate\Support\Facades\Auth;
 
         public function __construct()
         {
-            // parent::__construct(); 
 
             // $this->middleware('auth')->except(['index', 'show', 'create', 'complete']); 
+            $this->middleware('auth')->only(['create', 'store']);
         }
 
         

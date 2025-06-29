@@ -32,7 +32,8 @@ use App\Http\Controllers\YourHomeController;
 //     return view('index');
 // });
 
-Route::post('/requests', [RequestController::class, 'store'])->name('requests.store');
+Route::post('/requests', [RequestController::class, 'store'])->name('requests.store')
+                    ->middleware('auth');
 
 Route::get('/requests/create', [RequestController::class, 'create'])
                     ->middleware('auth')

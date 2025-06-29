@@ -15,14 +15,13 @@
   alt="手の仮画像" />
 
     <h1></h1>
-    <p>これは閲覧画面画面</p>
     <nav>
         <ul>
 
             @auth
                 <li><a href="{{ route('requests.create') }}" class="text-red-600">手伝って</a></li>
             @else
-                <li><a href="{{ route('login') }}" class="text-red-600">手伝って</a></li>
+                <li><a href="{{ route('login') }}" class="text-red-600">手伝って(ログインが必要です。)</a></li>
             @endauth
 
             @auth
