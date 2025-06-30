@@ -9,6 +9,10 @@ export default {
         './resources/views/**/*.blade.php',
     ],
 
+    safelist: [
+    "bg-[url('/images/hand_kari.png')]",
+  ],
+
     theme: {
         extend: {
             fontFamily: {

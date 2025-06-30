@@ -2,12 +2,7 @@
 
 @section('content')
 
-    {{-- <!DOCTYPE html>
-<html>
-<head>
-    <title>スケダチ</title>
-</head>
-<body> --}}
+
     <div>{{ Auth::id() }}</div>
     <h1>依頼投稿画面</h1>
     {{-- <form method="POST" action="{{ route('users.store') }}"> --}}
@@ -43,8 +38,8 @@
         </div>
     
         <div>
+            {{-- ↓4枚にするかどうするか？ --}}
             <label for="image">お手伝い画像</label>
-            <input type="file" id="image" name="image">
             {{-- <input type="file" id="image2" name="image">
             <input type="file" id="image3" name="image">
             <input type="file" id="image4" name="image"> --}}
@@ -67,6 +62,11 @@
     <button><a href="{{ route('index') }}">戻る</a></button>
 {{-- </body> --}}
 
+
+
+@endsection
+
+
 {{-- 今日以前をカレンダーで選べなくした。 ↓--}}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -80,8 +80,3 @@
         input.min = formatted;
     });
 </script>
-
-
-
-
-@endsection

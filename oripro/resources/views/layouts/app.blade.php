@@ -31,7 +31,16 @@
                     </div>
                 </header>
             @endisset
-
+            <!-- ファーストビュー画像 -->
+                {{-- ↓画像として --}}
+                {{-- <div class="w-full mx-auto h-[300px] md:h-[400px] lg:h-[500px] overflow-hidden">
+                    <img src="{{ asset('images/hand_kari.png') }}" alt="ファーストビュー画像" class="w-full h-full object-cover block" />
+                </div> --}}
+                {{-- ↓背景として --}}
+                <div
+                    class="w-full h-[300px] md:h-[400px] lg:h-[400px] bg-cover bg-center"
+                    style="background-image: url('{{ asset('images/hand_kari.png') }}');">
+                </div>
             <!-- Page Content -->
             <main>
                 @yield('content')
