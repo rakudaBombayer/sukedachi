@@ -12,17 +12,14 @@
     <img
   class="fit-picture"
   src="{{ asset('images/hand_kari.png') }}"
-  alt="手の仮画像" />
+  alt="手の仮画像" class="w-full h-auto block" />
 
     <h1></h1>
+    <p>これは閲覧画面画面</p>
     <nav>
         <ul>
+            <li><a href="{{ route('requests.create') }}" style="color: red;">手伝って</a></li>
 
-            @auth
-                <li><a href="{{ route('requests.create') }}" class="text-red-600">手伝って</a></li>
-            @else
-                <li><a href="{{ route('login') }}" class="text-red-600">手伝って(ログインが必要です。)</a></li>
-            @endauth
 
             @auth
                 <p>ようこそ、{{ Auth::user()->nickname }} さん！</p>
@@ -50,17 +47,14 @@
             {{-- < class="grid grid-cols-1 md:grid-cols-2 gap-4"> --}}
 
             {{-- ↓仮 --}}
-            <div class="flex flex-wrap gap-4">
-            @foreach ($allRequests as $request)
-                
-                    <div class="w-[30%] min-w-[200px] bg-white shadow rounded-md p-4 hover:bg-gray-50 transition">
-                        <a href="{{ route('requests.show', $request->request_ID) }}" class="font-semibold text-blue-600 hover:underline block">
-                            {{ $request->title }}
-                        </a>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                @foreach ($allRequests as $request)
+                    <div class="bg-white shadow rounded-md p-4 hover:bg-gray-50 transition">
+                        <a href="{{ route('requests.show', $request->request_ID) }}" class="font-semibold text-blue-600 hover:underline block">{{ $request->title }}</a>
                         <p class="text-sm text-gray-600 mt-1">場所 {{ $request->general_area }}</p>
                     </div>
                             
-            @endforeach
+                @endforeach
             </div>
 
 
@@ -78,6 +72,7 @@
                 <div class="bg-red-500 p-4">A</div>
                 <div class="bg-blue-500 p-4">B</div>
             </div>
+
         @else
             <p>まだ投稿された依頼はありません。</p>
         @endif

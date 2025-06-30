@@ -1,13 +1,13 @@
-{{-- @extends('layouts.app')
+@extends('layouts.app')
 
-@section('content') --}}
+@section('content')
 
-    <!DOCTYPE html>
+    {{-- <!DOCTYPE html>
 <html>
 <head>
     <title>スケダチ</title>
 </head>
-<body>
+<body> --}}
     <div>{{ Auth::id() }}</div>
     <h1>依頼投稿画面</h1>
     {{-- <form method="POST" action="{{ route('users.store') }}"> --}}
@@ -65,7 +65,7 @@
         <button type="submit">投稿</a></button>
     </form>
     <button><a href="{{ route('index') }}">戻る</a></button>
-</body>
+{{-- </body> --}}
 
 {{-- 今日以前をカレンダーで選べなくした。 ↓--}}
 <script>
@@ -81,4 +81,7 @@
     });
 </script>
 
-{{-- @endsection --}}
+
+
+
+@endsection

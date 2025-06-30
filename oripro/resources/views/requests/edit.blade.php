@@ -1,9 +1,13 @@
-<!DOCTYPE html>
+@extends('layouts.app')
+
+@section('content')
+
+{{-- <!DOCTYPE html>
 <html>
 <head>
     <title>依頼編集</title>
 </head>
-<body>
+<body> --}}
 
     <h1>依頼編集画面</h1>
 
@@ -79,6 +83,8 @@
     <div style="margin-top: 20px;">
         <a href="{{ route('requests.show', $request->request_ID) }}">依頼詳細に戻る</a>
     </div>
+@endsection
 
-</body>
-</html>
+
+{{-- </body>
+</html> --}}
