@@ -18,7 +18,7 @@
         </div> --}}
         <div class="flex flex-col gap-2">
             <label for="help_type" style="font-weight: bold; color: black;">お手伝い種類</label>
-            <select name="help_category_ID">
+            <select name="help_category_ID" class="w-1/2 bg-[#F2EEEE] border border-gray-300 rounded-[60px] px-4 py-2" required>
                 <option value="1">送迎</option>
                 <option value="2">手伝い</option>
                 <option value="3">買い物</option>
@@ -28,12 +28,18 @@
     
         <div class="flex flex-col gap-2">
             <label for="help_details" style="font-weight: bold; color: black;">お手伝い詳細</label>
-            <input type="text" id="help_details" name="help_details" required style="width: 300px; height: 80px;" >
+            {{-- <input type="text" id="help_details" name="help_details" class="w-1/2 h-[15vh] bg-[#F2EEEE] border border-gray-300 rounded-[60px] px-4 py-2" required > --}}
+            <textarea
+                id="location"
+                name="general_area"
+                required
+                rows="4"
+                class="w-1/2 bg-[#F2EEEE] border border-gray-300 rounded-[40px] px-4 py-2 resize-none"></textarea>
         </div>
     
         <div class="flex flex-col gap-2"> 
             <label for="requested_date" style="font-weight: bold; color: black;">希望日、希望時間</label>
-            <input type="datetime-local"" id="requested_date" name="requested_date" required>
+            <input type="datetime-local"" id="requested_date" name="requested_date" class="w-1/2 bg-[#F2EEEE] border border-gray-300 rounded-[60px] px-4 py-2" required>
         </div>
     
         <div class="flex flex-col gap-2">
@@ -45,12 +51,12 @@
     
         <div class="flex flex-col gap-2">
             <label for="estimated_time" style="font-weight: bold; color: black;">所要時間</label>
-            <input type="text" id="estimated_time" name="estimated_time" required>
+            <input type="text" id="estimated_time" name="estimated_time" class="w-1/2 bg-[#F2EEEE] border border-gray-300 rounded-[60px] px-4 py-2" required>
         </div>
     
         <div class="flex flex-col gap-2">
             <label for="location" style="font-weight: bold; color: black;">大まかな場所</label>
-            <input type="text" id="location" name="general_area" required>
+            <input type="text" id="location" name="general_area" class="w-1/2 bg-[#F2EEEE] border border-gray-300 rounded-[20px] px-4 py-2" required>
         </div>
     
         <input type="hidden" name="user_ID" value="{{ Auth::id() }}">
