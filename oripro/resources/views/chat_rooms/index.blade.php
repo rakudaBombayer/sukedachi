@@ -1,6 +1,6 @@
-{{-- @extends('layouts.app')
+@extends('layouts.app')
 
-@section('content') --}}
+@section('content')
 
     <!DOCTYPE html>
 <html>
@@ -58,4 +58,4 @@
 </body>
 
     {{-- ここに投稿されたメッセージを表示する処理を追加します --}}
-{{-- @endsection --}}
+@endsection
