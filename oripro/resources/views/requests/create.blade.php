@@ -4,12 +4,11 @@
 
 
     <div>{{ Auth::id() }}</div>
-    <h1>依頼投稿画面</h1>
     {{-- <form method="POST" action="{{ route('users.store') }}"> --}}
         <form method="POST" action="{{ route('requests.store') }}" enctype="multipart/form-data">
         @csrf
         <div>
-            <label for="title">タイトル</label>
+            <label for="title" style="font-weight: bold; color: black;">タイトル</label>
             <input type="text" id="title" name="title" required>
         </div>
     
@@ -18,7 +17,7 @@
             <input type="text" id="help_type" name="help_name" required>
         </div> --}}
         <div>
-            <label for="help_type">お手伝い種類</label>
+            <label for="help_type" style="font-weight: bold; color: black;">お手伝い種類</label>
             <select name="help_category_ID">
                 <option value="1">送迎</option>
                 <option value="2">手伝い</option>
@@ -28,18 +27,18 @@
         </div>
     
         <div>
-            <label for="help_details">お手伝い詳細</label>
+            <label for="help_details" style="font-weight: bold; color: black;">お手伝い詳細</label>
             <input type="text" id="help_details" name="help_details" required style="width: 300px; height: 80px;">
         </div>
     
         <div>
-            <label for="requested_date">希望日、希望時間</label>
+            <label for="requested_date" style="font-weight: bold; color: black;">希望日、希望時間</label>
             <input type="datetime-local"" id="requested_date" name="requested_date" required>
         </div>
     
         <div>
             {{-- ↓4枚にするかどうするか？ --}}
-            <label for="image">お手伝い画像</label>
+            <label for="image" style="font-weight: bold; color: black;">お手伝い画像</label>
             {{-- <input type="file" id="image2" name="image">
             <input type="file" id="image3" name="image">
             <input type="file" id="image4" name="image"> --}}
@@ -47,19 +46,19 @@
         </div>
     
         <div>
-            <label for="estimated_time">所要時間</label>
+            <label for="estimated_time" style="font-weight: bold; color: black;">所要時間</label>
             <input type="text" id="estimated_time" name="estimated_time" required>
         </div>
     
         <div>
-            <label for="location">大まかな場所</label>
+            <label for="location" style="font-weight: bold; color: black;">大まかな場所</label>
             <input type="text" id="location" name="general_area" required>
         </div>
     
         <input type="hidden" name="user_ID" value="{{ Auth::id() }}">
-        <button type="submit">投稿</a></button>
+        <button type="submit" style="font-weight: bold; color: black;">投稿</a></button>
     </form>
-    <button><a href="{{ route('index') }}">戻る</a></button>
+    <button><a href="{{ route('index') }}" style="font-weight: bold; color: black;">戻る</a></button>
 {{-- </body> --}}
 
 
