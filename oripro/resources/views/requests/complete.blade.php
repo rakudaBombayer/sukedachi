@@ -2,16 +2,10 @@
 
 @section('content')
 
-    {{-- <!DOCTYPE html>
-<html>
-<head>
-    <title>スケダチ</title>
-</head>
-<body> --}}
 
-    <h1>投稿できました。応募があるまでお待ちください。</h1>
+    <div>投稿できました。応募があるまでお待ちください。</div>
 
-    <h2>投稿内容</h2>
+    <div>投稿内容</div>
     <ul>
         <li>タイトル: {{ $request->title }}</li>
         <li>お手伝い種類: {{ $request->help_category_ID }}</li>
