@@ -20,7 +20,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-white">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
@@ -38,7 +38,7 @@
                 </div> --}}
                 {{-- ↓背景として --}}
                 <div
-                    class="w-full h-[300px] md:h-[400px] lg:h-[400px] bg-cover bg-center"
+                    class="w-full h-[300px] md:h-[400px] lg:h-[400px] bg-cover bg-center bg-[#FFCECE]"
                     style="background-image: url('{{ asset('images/hand_kari.png') }}');">
                 </div>
             <!-- Page Content -->
