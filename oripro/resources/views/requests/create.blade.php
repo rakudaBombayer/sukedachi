@@ -39,7 +39,7 @@
                 {{-- <label for="image" style="font-weight: bold; color: black;">お手伝い画像</label>
                 <input type="file" id="image" name="image"> --}}
                 <!-- 選んだ画像を表示する領域 -->
-                <img id="preview" class="mt-4 w-3/4 h-auto rounded-md hidden" />
+                <img id="preview" class="mt-4 w-3/4 h-auto rounded-md hidden" style="max-width: 200px; max-height: 200px;" />
                 
                 <label for="image" class="inline-block w-3/4 bg-[#FF9D9D] text-white font-bold text-center mt-3 px-4 py-2 rounded-[60px] cursor-pointer hover:bg-[#fd8f8f] ">
                 画像を投稿
