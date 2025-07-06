@@ -27,3 +27,4 @@
         </div>
     </div>
 </x-app-layout>
+<div>アカウント詳細画面</div>
