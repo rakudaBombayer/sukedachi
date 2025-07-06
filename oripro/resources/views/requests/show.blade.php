@@ -27,6 +27,7 @@
 
         <div>
             <strong>お手伝い詳細↓</strong> <pre>{{ $request->help_details }}</pre>
+        </div>
         <div>
             <strong>希望日時:</strong> {{ $request->requested_date }}
         </div>
