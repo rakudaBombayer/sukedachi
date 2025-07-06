@@ -3,7 +3,8 @@
 @section('content')
 
 <div class="flex flex-col pt-6 items-center min-h-screen text-center">
-    <div class="font-bold text-base sm:text-lg md:text-xl lg:text-2xl">投稿できました。応募があるまでお待ちください。</div>
+    <div class="font-bold text-base sm:text-lg md:text-xl lg:text-2xl">投稿できました。</div>
+    <div class="font-bold text-base sm:text-lg md:text-xl lg:text-2xl">応募があるまでお待ちください。</div>
 
     <div class="mt-4">
          <div>投稿内容</div>
@@ -25,8 +26,8 @@
             <li>投稿日時: {{ $request->created_at }}</li>
         </ul>
 
-        <button><a href="{{ route('index') }}" style="color: red;">ホームへ</a></button>
-
+        {{-- <button><a href="{{ route('index') }}" style="color: red;">ホームへ</a></button> --}}
+        <button onclick="window.location.href='{{ route('index') }}'" class="bg-[#FF9D9D] text-xl font-bold text-white mt-8 py-2 px-4 rounded-3xl hover:bg-[#fd8f8f] transition shadow-md">ホームへ</button>
     </div>
    
 
