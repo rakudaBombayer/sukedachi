@@ -8,15 +8,6 @@
 <!-- ここに選定機能を追加していく -->
 
 <h3>応募してくれたユーザー</h3>
-{{-- <ul>
-    @forelse ($userRequest->applicants as $applicant)
-        <li>{{ $applicant->user->nickname }}（ID: {{ $applicant->user_ID }}）</li>
-    @empty
-        <li>まだ応募者がいません</li>
-    @endforelse
-
-    
-</ul> --}}
 
 <ul>
 @forelse ($userRequest->applicants as $applicant)
