@@ -41,7 +41,7 @@
                 <!-- 選んだ画像を表示する領域 -->
                 <img id="preview" class="mt-4 w-3/4 h-auto rounded-md hidden" />
                 
-                <label for="image" class="inline-block w-3/4 bg-gray-200 text-gray-800  mt-3 px-4 py-2 rounded-[60px] cursor-pointer hover:bg-gray-300 text-center">
+                <label for="image" class="inline-block w-3/4 bg-[#FF9D9D] text-white font-bold text-center mt-3 px-4 py-2 rounded-[60px] cursor-pointer hover:bg-[#fd8f8f] ">
                 画像を投稿
                 </label>
                 
