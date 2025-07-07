@@ -10,13 +10,24 @@
     {{-- <p>デバッグ: chatRoomId = {{ $chatRoomId ?? '未設定' }}</p> --}}
 
      {{-- チャットログ --}}
-    <div class="flex-1 overflow-y-auto px-4 py-2 flex flex-col-reverse gap-2">
+    <div class="flex-1 overflow-y-auto px-4 py-2 flex flex-col-reverse gap-2 ">
         @foreach ($chatMessages->reverse() as $message)
             @if ($message->chat_room_ID == $chatRoomId)
                 {{-- <div>{{ $message->text }} (投稿者ID: {{ $message->user_ID }})</div> --}}
+
+            
             <div class="flex {{ $message->user_ID === Auth::id() ? 'justify-end' : 'justify-start' }}">
-                <div class="{{ $message->user_ID === Auth::id() ? 'bg-[#FEE1E1]' : 'bg-[#F2EEEE]' }} max-w-[70%] px-4 py-2 rounded-2xl shadow text-sm font-bold">{{ $message->text }}</div>
+                <div class="{{ $message->user_ID === Auth::id() ? 'bg-[#FEE1E1]' : 'bg-[#F2EEEE]' }} max-w-[70%] px-4 py-2 rounded-2xl shadow text-sm font-bold">
+                    {{ $message->text }}
+                </div>
             </div>
+
+            {{-- 相手のメッセージのときだけニックネームを表示 --}}
+            @if ($message->user_ID !== Auth::id())
+            <span class="text-xs text-[#fd8f8f] font-semibold ">
+                {{ $message->user->nickname }}
+            </span>
+            @endif
             @endif
         @endforeach
     </div>
