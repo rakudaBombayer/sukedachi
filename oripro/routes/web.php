@@ -20,7 +20,6 @@ use App\Http\Controllers\HelpCategoryController;
 use App\Http\Controllers\ImageController;
 
 
-
 use App\Http\Controllers\YourHomeController;
 
 
@@ -32,15 +31,16 @@ use App\Http\Controllers\YourHomeController;
 //     return view('index');
 // });
 
+
+
 Route::post('/requests', [RequestController::class, 'store'])->name('requests.store')
                     ->middleware('auth');
-
+                    
 Route::get('/requests/create', [RequestController::class, 'create'])
                     ->middleware('auth')
                     ->name('requests.create');
                     
 
-            
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -2,16 +2,8 @@
 
 @section('content')
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>スケダチ</title>
-</head>
-<body>
 
 
-
-    <h1></h1>
     <nav>
         <ul>
             <li><a href="{{ route('requests.create') }}" style="color: red;">手伝って</a></li>
@@ -45,35 +37,18 @@
             {{-- ↓仮 --}}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                 @foreach ($allRequests as $request)
-                    <div class="bg-white shadow rounded-md p-4 hover:bg-gray-50 transition">
-                        <a href="{{ route('requests.show', $request->request_ID) }}" class="font-semibold text-blue-600 hover:underline block">{{ $request->title }}</a>
-                        <p class="text-sm text-gray-600 mt-1">場所 {{ $request->general_area }}</p>
+                    <div class="bg-[#FEE1E1] shadow rounded-md p-4 hover:bg-[#FF9D9D] transition aspect-square min-h-[100px]">
+                        <a href="{{ route('requests.show', $request->request_ID) }}" class="font-semibold text-black hover:underline block">{{ $request->title }}</a>
+                        <p class="text-sm font-bold text-gray-600 mt-1">場所 {{ $request->general_area }}</p>
                     </div>
                             
                 @endforeach
             </div>
 
-
-                <p>{{ count($allRequests) }} 件の投稿</p>
-                <div class="grid grid-cols-2 gap-4">
-                <div class="bg-yellow-200 p-4">カード1</div>
-                <div class="bg-yellow-200 p-4">カード2</div>
-                <div class="bg-yellow-200 p-4">カード3</div>
-                <div class="bg-red-300 p-4">A</div>
-                </div>
-
-
-            
-            <div class="grid grid-cols-2 gap-4 bg-yellow-200 p-4">
-                <div class="bg-red-500 p-4">A</div>
-                <div class="bg-blue-500 p-4">B</div>
+            @else
+                <p>まだ投稿された依頼はありません。</p>
+            @endif
             </div>
-
-        @else
-            <p>まだ投稿された依頼はありません。</p>
-        @endif
         </div>
-
-
     </div>
 @endsection
