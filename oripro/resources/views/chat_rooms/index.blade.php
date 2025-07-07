@@ -53,7 +53,7 @@
     @if(isset($previousRequestId))
         {{-- <button><a href="{{ route('requests.show', $previousRequestId) }}">依頼詳細へ戻る</a></button> --}}
         <div class="justify-start bg-[#fef3f3]">
-            <button onclick="location.href='{{ route('requests.show', $previousRequestId) }}'"
+            <button onclick="window.location.href='{{ route('requests.show', $previousRequestId) }}'"
             class="inline-block bg-white text-[#fd8f8f] border-2 border-[#fd8f8f] mx-4 my-2 px-4 py-2 rounded-full font-bold hover:bg-[#FEE1E1] transition">
                 戻る
             </button>
