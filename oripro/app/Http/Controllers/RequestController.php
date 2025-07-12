@@ -1,81 +1,77 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Request as UserRequest;
-
-use App\Models\HelpCategory; 
+use App\Models\HelpCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
-use Illuminate\Support\Facades\Auth; 
+class RequestController extends Controller
+{
+    public function __construct()
+    {
+
+        // $this->middleware('auth')->except(['index', 'show', 'create', 'complete']);
+        $this->middleware('auth')->only(['create', 'store']);
+    }
 
 
+    public function index()
+    {
+        $requests = UserRequest::all();
+        // $requests = UserRequest::paginate(10);
 
-    class RequestController extends Controller 
-    { 
+            // foreach (UserRequest::cursor() as $request) {
+            //     $requests[] = $request;
+            // }
 
-        public function __construct()
-        {
+        return view('requests/index', compact('requests'));
+    }
 
-            // $this->middleware('auth')->except(['index', 'show', 'create', 'complete']); 
-            $this->middleware('auth')->only(['create', 'store']);
+    public function create()
+    {
+
+            $helpCategories = UserRequest::select('help_category_ID', 'title')->distinct()->get();
+            return view('requests.create', compact('helpCategories'));
+
+        // return view('requests/create');
+    }
+
+    public function store(Request $request)
+    {
+
+            $requestData = $request->all();
+
+            // dd($request->all());
+
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'ログインしてください。');
         }
 
-        
-        public function index() 
-        { 
-            $requests = UserRequest::all();
-            // $requests = UserRequest::paginate(10);
 
-                // foreach (UserRequest::cursor() as $request) {
-                //     $requests[] = $request;
-                // }
-            
-            return view('requests/index',compact('requests')); 
-        } 
-        
-        public function create() 
-        { 
-            
-                $helpCategories = UserRequest::select('help_category_ID', 'title')->distinct()->get();
-                return view('requests.create', compact('helpCategories'));
-            
-            // return view('requests/create'); 
-        }
-            
-        public function store(Request $request)
-            {   
-                
-                $requestData = $request->all();
-                
-                // dd($request->all());
-                
-                if (!Auth::check()) {
-                return redirect()->route('login')->with('error', 'ログインしてください。');
-                }
-                
-
-                $data = [
-                    'user_ID' => Auth::id(), // ★修正：ログインユーザーのIDを自動でセット
-                    'help_category_ID' => intval($request->input('help_category_ID')), // ここに追加
-                    'help_details' => $requestData['help_details'] ?? '',
-                    'title' => $requestData['title'] ?? null,
-                    'requested_date' => isset($requestData['requested_date']) ? date('Y-m-d', strtotime($requestData['requested_date'])) : null,
-                    'estimated_time' => $requestData['estimated_time'] ?? null,
-                    'general_area' => $requestData['general_area'] ?? null,
-                ];
+            $data = [
+                'user_ID' => Auth::id(), // ★修正：ログインユーザーのIDを自動でセット
+                'help_category_ID' => intval($request->input('help_category_ID')), // ここに追加
+                'help_details' => $requestData['help_details'] ?? '',
+                'title' => $requestData['title'] ?? null,
+                'requested_date' => isset($requestData['requested_date']) ? date('Y-m-d', strtotime($requestData['requested_date'])) : null,
+                'estimated_time' => $requestData['estimated_time'] ?? null,
+                'general_area' => $requestData['general_area'] ?? null,
+            ];
 
 
-                // dd($request->all());
-                // $requestModel = UserRequest::create($data);
-                // dd($requestModel);
+            // dd($request->all());
+            // $requestModel = UserRequest::create($data);
+            // dd($requestModel);
 
 
-                // dd($request->all()); 
-                $requestModel = UserRequest::create($data);
+            // dd($request->all());
+            $requestModel = UserRequest::create($data);
 
-                 //画像の保存処理↓(あまり理解していないのでもう一度)
+             //画像の保存処理↓(あまり理解していないのでもう一度)
             try {
                 if ($request->hasFile('image')) {
                     Log::info('Image file is present.');
@@ -98,82 +94,82 @@ use Illuminate\Support\Facades\Auth;
             } catch (\Exception $e) {
                 Log::error('Image saving error:', ['message' => $e->getMessage()]);
             }
-            
-                return redirect()->route('requests.complete', ['request' => $requestModel]);
-            }   
-                
-        public function show(UserRequest $request) 
-        {   
-            
-            // 🔹 指定されたリクエストを取得
+
+            return redirect()->route('requests.complete', ['request' => $requestModel]);
+    }
+
+    public function show(UserRequest $request)
+    {
+
+        // 🔹 指定されたリクエストを取得
         $userRequest = UserRequest::findOrFail($request->request_ID);
 
 
-            $helpCategoryMap = [
-                1 => '送迎',
-                2 => '手伝い',
-                3 => '買い物',
-                4 => 'その他',
-            ];
+        $helpCategoryMap = [
+            1 => '送迎',
+            2 => '手伝い',
+            3 => '買い物',
+            4 => 'その他',
+        ];
 
-            $helpCategory = $helpCategoryMap[$userRequest->help_category_ID] ?? '未設定';
-
-
-            
-            return view('requests.show', compact('request','userRequest', 'helpCategory')); 
-        } 
-        
-        public function edit(UserRequest $request) 
-        {   
-            // dd(Auth::id(), $request->user_ID);
-
-            
-            // ★追加：投稿の所有者以外が編集できないようにする
-            if (Auth::id() !== $request->user_ID) {
-                abort(403, 'Unauthorized action.'); // 403 Forbidden エラーを返す
-            }
-
-            // ★追加: ヘルプカテゴリのデータを取得してビューに渡す
-            $helpCategories = UserRequest::select('help_category_ID', 'title')->distinct()->get();
-            
-            // return view('requests.edit', compact('request')); 
-            return view('requests.edit', compact('request', 'helpCategories')); // ★修正: helpCategoriesも渡す
-        } 
-        
-        
-        // public function update(Request $request, UserRequest $userRequest)
-        public function update(Request $request, $requestId)
-        { 
-            
-            $userRequest = UserRequest::findOrFail($requestId); // 明示的に取得
-            // dd($request->all());
-            // dd($userRequest); 
-            
-            // dd($userRequest);
-            
-            // ★追加：投稿の所有者以外が更新できないようにする
-            if (Auth::id() !== $userRequest->user_ID) {
-                dd(Auth::id(), $userRequest->user_ID); // デバッグ用
-                
-                abort(403, 'Unauthorized action.');
-            }
-            
-            $request->validate([
-            'user_ID' => 'required|exists:users,user_ID', 
-            'help_category_ID' => 'required|exists:requests,help_category_ID', // `requests` テーブルに変更
-            ]);
+        $helpCategory = $helpCategoryMap[$userRequest->help_category_ID] ?? '未設定';
 
 
-            $userRequest->update($request->except(['image'])); // 画像以外のデータを更新
 
-            // $data = $request->all();
-            // $data['user_ID'] = Auth::id(); // 明示的にログインユーザーをセット
-            // $userRequest->update($data);
+        return view('requests.show', compact('request', 'userRequest', 'helpCategory'));
+    }
 
-            
+    public function edit(UserRequest $request)
+    {
+        // dd(Auth::id(), $request->user_ID);
 
-            // 画像投稿編集機能↓
-            try {
+
+        // ★追加：投稿の所有者以外が編集できないようにする
+        if (Auth::id() !== $request->user_ID) {
+            abort(403, 'Unauthorized action.'); // 403 Forbidden エラーを返す
+        }
+
+        // ★追加: ヘルプカテゴリのデータを取得してビューに渡す
+        $helpCategories = UserRequest::select('help_category_ID', 'title')->distinct()->get();
+
+        // return view('requests.edit', compact('request'));
+        return view('requests.edit', compact('request', 'helpCategories')); // ★修正: helpCategoriesも渡す
+    }
+
+
+    // public function update(Request $request, UserRequest $userRequest)
+    public function update(Request $request, $requestId)
+    {
+
+        $userRequest = UserRequest::findOrFail($requestId); // 明示的に取得
+        // dd($request->all());
+        // dd($userRequest);
+
+        // dd($userRequest);
+
+        // ★追加：投稿の所有者以外が更新できないようにする
+        if (Auth::id() !== $userRequest->user_ID) {
+            dd(Auth::id(), $userRequest->user_ID); // デバッグ用
+
+            abort(403, 'Unauthorized action.');
+        }
+
+        $request->validate([
+        'user_ID' => 'required|exists:users,user_ID',
+        'help_category_ID' => 'required|exists:requests,help_category_ID', // `requests` テーブルに変更
+        ]);
+
+
+        $userRequest->update($request->except(['image'])); // 画像以外のデータを更新
+
+        // $data = $request->all();
+        // $data['user_ID'] = Auth::id(); // 明示的にログインユーザーをセット
+        // $userRequest->update($data);
+
+
+
+        // 画像投稿編集機能↓
+        try {
             if ($request->hasFile('image')) {
                 // 古い画像がある場合は削除
                 if ($userRequest->image && $userRequest->image->image) {
@@ -199,27 +195,27 @@ use Illuminate\Support\Facades\Auth;
         }
 
         // 画像投稿編集機能↑
-    
-        
+
+
         return redirect()->route('requests.show', ['request' => $userRequest->request_ID]) // 修正: 更新後に詳細ページへ
-                ->with('success', '投稿が更新されました。');
-            
-            //↓画像編集機能を試す前のリダイレクト先
-            // $useRequest->update($request->all()); return redirect()->route('requests.index'); 
-        } 
-        
-        
-        public function destroy(UserRequest $request) 
-        {   
-            // ★追加：投稿の所有者以外が削除できないようにする
-            $userRequest = UserRequest::findOrFail($request->request_ID); // ✔ 正しく取得
-            // dd($userRequest); 
-            
-            if (Auth::id() !== $request->user_ID) {
+            ->with('success', '投稿が更新されました。');
+
+        //↓画像編集機能を試す前のリダイレクト先
+        // $useRequest->update($request->all()); return redirect()->route('requests.index');
+    }
+
+
+    public function destroy(UserRequest $request)
+    {
+        // ★追加：投稿の所有者以外が削除できないようにする
+        $userRequest = UserRequest::findOrFail($request->request_ID); // ✔ 正しく取得
+        // dd($userRequest);
+
+        if (Auth::id() !== $request->user_ID) {
             abort(403, 'Unauthorized action.');
         }
 
-                // ★追加：関連する画像を先に削除(try)
+            // ★追加：関連する画像を先に削除(try)
         try {
             if ($request->image && $request->image->image) {
                 $filename = basename($request->image->image);
@@ -229,42 +225,42 @@ use Illuminate\Support\Facades\Auth;
         } catch (\Exception $e) {
             Log::error('Image deletion error (during destroy):', ['message' => $e->getMessage()]);
         }
-            //↑  ★追加：関連する画像を先に削除(try)  
-        
-            $request->delete(); 
-            return redirect()->route('index')
-                            ->with('success', '投稿が削除されました。');
-        } 
+        //↑  ★追加：関連する画像を先に削除(try)
 
-            // ここに追加
-        public function complete(\App\Models\Request $request)
-        {
-            $userRequest = UserRequest::findOrFail($request->request_ID);
+        $request->delete();
+        return redirect()->route('index')
+                        ->with('success', '投稿が削除されました。');
+    }
 
-            // 🔹 **カテゴリIDに応じた名前を設定**
-            $helpCategoryMap = [
-                1 => '送迎',
-                2 => '手伝い',
-                3 => '買い物',
-                4 => 'その他',
-            ];
+        // ここに追加
+    public function complete(\App\Models\Request $request)
+    {
+        $userRequest = UserRequest::findOrFail($request->request_ID);
 
-            $helpCategory = $helpCategoryMap[$userRequest->help_category_ID] ?? '未設定';
+        // 🔹 **カテゴリIDに応じた名前を設定**
+        $helpCategoryMap = [
+            1 => '送迎',
+            2 => '手伝い',
+            3 => '買い物',
+            4 => 'その他',
+        ];
+
+        $helpCategory = $helpCategoryMap[$userRequest->help_category_ID] ?? '未設定';
 
         return view('requests.complete', compact('request', 'userRequest', 'helpCategory'));
 
 
-            
-        // 投稿完了画面のロジックを記述
-            // return view('requests.complete', ['request' => $request]);
-        }
 
-        public function select(Request $request, $requestId)
-        {
-        
+        // 投稿完了画面のロジックを記述
+        // return view('requests.complete', ['request' => $request]);
+    }
+
+    public function select(Request $request, $requestId)
+    {
+
         $userRequest = UserRequest::with(['applicants.user'])->findOrFail($requestId);
         // $userRequest = UserRequest::findOrFail($requestId);
-        
+
 
         //ヘルプカテゴリーIDを使うかどうか検討中↓
         $categoryMap = [
@@ -272,13 +268,13 @@ use Illuminate\Support\Facades\Auth;
         2 => '手伝い',
         3 => '買い物',
         4 => 'その他',
-    ];
+        ];
 
-        
+
         $helpCategory = $categoryMap[$userRequest->help_category_ID] ?? '未設定';
-        
+
 
 
         return view('requests.selection', compact('userRequest', 'helpCategory'));
-}
     }
+}

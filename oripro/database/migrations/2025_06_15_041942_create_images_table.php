@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-    Schema::create('images', function (Blueprint $table) {
-        $table->increments('image_ID'); // プライマリーキー（自動増加）
-        $table->string('image', 255);   // 画像パスの保存
-    });
-
+        Schema::create('images', function (Blueprint $table) {
+            $table->increments('image_ID'); // プライマリーキー（自動増加）
+            $table->string('image', 255);   // 画像パスの保存
+        });
     }
 
     /**

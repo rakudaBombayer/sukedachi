@@ -8,21 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class Request extends Model
 {
     use HasFactory;
-    
+
     protected $table = 'requests';
     protected $primaryKey = 'request_ID';
     public $incrementing = true; // プライマリキーが自動増分の場合
-    
+
     protected $fillable = [
-        'user_ID', 
-        'help_category_ID', 
+        'user_ID',
+        'help_category_ID',
         'help_details',
-        'title', 
+        'title',
         'requested_date',
-        'image_ID', 
-        'payment_ID', 
-        'payment_method', 
-        'estimated_time', 
+        'image_ID',
+        'payment_ID',
+        'payment_method',
+        'estimated_time',
         'general_area',
         'image_path' // 既存の画像パスカラム
     ];
@@ -31,7 +31,7 @@ class Request extends Model
     {
         return $this->hasMany(Applicant::class, 'request_ID');
     }
-    
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_ID');
@@ -51,5 +51,4 @@ class Request extends Model
     {
         return $this->hasOne(Payment::class, 'payment_ID');
     }
-    
 }

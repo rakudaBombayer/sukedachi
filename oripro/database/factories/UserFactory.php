@@ -27,7 +27,7 @@ class UserFactory extends Factory
             'nickname' => $this->faker->name,
             'email' => fake()->unique()->safeEmail(),
             'password' => static::$password ??= Hash::make('password'),
-            'address' => '石川県羽咋郡', 
+            'address' => '石川県羽咋郡',
             'self_introduction' => 'よろしくお願いします！Laravel学習中です。',
         ];
     }
