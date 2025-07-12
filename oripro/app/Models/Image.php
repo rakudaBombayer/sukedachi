@@ -16,9 +16,9 @@ class Image extends Model
 
     public $timestamps = false; // ← これを追加
 
-    
+
     public function request()
     {
-        return $this->belongsTo(Request::class, 'image_ID'); 
+        return $this->belongsTo(Request::class, 'image_ID');
     }
 }

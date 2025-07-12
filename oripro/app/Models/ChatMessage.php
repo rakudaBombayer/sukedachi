@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class ChatMessage extends Model
 {
     use HasFactory;
-    
+
     protected $table = 'chat_messages';
     protected $primaryKey = 'chat_message_ID';
     protected $fillable = ['chat_room_ID', 'user_ID', 'text'];
@@ -21,5 +22,4 @@ class ChatMessage extends Model
     {
         return $this->belongsTo(User::class, 'user_ID');
     }
-    
 }

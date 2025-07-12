@@ -2,26 +2,15 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RequestController; 
-
-
+use App\Http\Controllers\RequestController;
 use App\Http\Controllers\UserController;
-
 use App\Http\Controllers\ChatRoomController;
-
 use App\Http\Controllers\ChatMessageController;
-
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-
 use App\Http\Controllers\ApplicantController;
-
 use App\Http\Controllers\HelpCategoryController;
-
 use App\Http\Controllers\ImageController;
-
-
 use App\Http\Controllers\YourHomeController;
-
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -35,11 +24,11 @@ use App\Http\Controllers\YourHomeController;
 
 Route::post('/requests', [RequestController::class, 'store'])->name('requests.store')
                     ->middleware('auth');
-                    
+
 Route::get('/requests/create', [RequestController::class, 'create'])
                     ->middleware('auth')
                     ->name('requests.create');
-                    
+
 
 
 Route::get('/dashboard', function () {
@@ -100,7 +89,7 @@ Route::get('/chat_rooms/goto/{request}', [ChatRoomController::class, 'goto'])->n
 
 
 Route::post('/chat-messages', [ChatMessageController::class, 'store'])
-                    ->middleware('auth') 
+                    ->middleware('auth')
                     ->name('chat_messages.store');
 
 Route::get('/chat_messages/{chatRoomId}', [ChatMessageController::class, 'index'])->name('chat_messages.index');
@@ -158,4 +147,4 @@ Route::resource('images', ImageController::class);
 //投稿物の編集機能
 Route::resource('posts', RequestController::class)->middleware(['auth']); // ログイン必須とする場合
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
