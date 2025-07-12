@@ -39,7 +39,7 @@
                 {{-- ↓背景として --}}
                 <div
                     class="w-full h-[300px] md:h-[400px] lg:h-[400px] bg-cover bg-center bg-[#FFCECE]"
-                    style="background-image: url('{{ asset('images/hand_kari.png') }}');">
+                    style="background-image: url('{{ asset('images/hand.png') }}');">
                 </div>
             <!-- Page Content -->
             <main>
