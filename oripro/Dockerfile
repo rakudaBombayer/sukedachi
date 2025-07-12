@@ -31,6 +31,12 @@ RUN chmod -R 755 /var/www/storage /var/www/bootstrap/cache
 RUN composer install --no-dev --no-interaction --optimize-autoloader \
     && npm install && npm run build
 
+# キャッシュをクリアするコマンド（Composerの後などに追加）
+RUN php artisan config:clear \
+    && php artisan route:clear \
+    && php artisan cache:clear
+
+
 # ポート 9000 を公開 (PHP-FPM のデフォルトポート)
 EXPOSE 9000
 
