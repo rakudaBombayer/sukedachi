@@ -10,7 +10,7 @@ export default {
     ],
 
     safelist: [
-    "bg-[url('/images/hand_kari.png')]",
+    "bg-[url('/images/hand.png')]",
   ],
 
     theme: {
