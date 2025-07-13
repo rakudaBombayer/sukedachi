@@ -35,7 +35,7 @@
             @if ($request->image)
                 <div>
                     <strong>画像:</strong>
-                    <img src="{{ asset($request->image->image) }}" alt="依頼画像" style="max-width: 300px;">
+                    <img src="{{ asset($request->image->image) }}?v={{ time() }}" alt="依頼画像" loading="lazy" style="max-width: 300px;">
                 </div>
             @endif
 

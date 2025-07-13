@@ -16,7 +16,7 @@
             <li>希望日、希望時間: {{ $request->requested_date }}</li>
         
         @if ($request->image)
-            <img src="{{ $request->image->image }}" alt="投稿画像" style="max-width: 200px;">
+            <img src="{{ $request->image->image }}?v={{ time() }}" alt="投稿画像" loading="lazy" style="max-width: 200px;">
         @endif
 
     

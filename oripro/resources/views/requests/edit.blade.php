@@ -57,7 +57,7 @@
         <div class="flex flex-col gap-2 items-center pt-2">
           
             @if ($request->image && $request->image->image)
-                <img src="{{ asset($request->image->image) }}" alt="Current Image" style="max-width: 200px; max-height: 200px;">
+                <img src="{{ asset($request->image->image) }}?v={{ time() }}" alt="Current Image" style="max-width: 200px; max-height: 200px;">
                 <br>
             @endif
               <label for="image" class="inline-block w-3/4 bg-[#FF9D9D] text-white font-bold text-center mt-3 px-4 py-2 rounded-[60px] cursor-pointer hover:bg-[#fd8f8f] ">お手伝い画像 (現在の画像: {{ $request->image ? 'あり' : 'なし' }})</label>
