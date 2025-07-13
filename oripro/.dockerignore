@@ -6,6 +6,10 @@ storage/framework/cache/*
 storage/framework/sessions/*
 storage/framework/views/*
 storage/logs/*
+
+# 明示的に投稿画像ディレクトリを残す（補強）
+!storage/app/public/images/**
+
 # まず不要なenvファイルを除外
 .env
 .env.production

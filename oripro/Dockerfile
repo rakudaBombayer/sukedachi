@@ -32,6 +32,8 @@ COPY tailwind.config.js ./
 # アプリ全体コピー（残りのファイル）
 COPY . .
 
+ENV APP_ENV=production
+
 RUN composer install --no-dev --no-interaction --optimize-autoloader \
     && npm install && npm run build
 
@@ -40,6 +42,14 @@ RUN composer install --no-dev --no-interaction --optimize-autoloader \
 # 権限設定
 RUN chown -R www-data:www-data /var/www
 RUN chmod -R 755 /var/www/storage /var/www/bootstrap/cache
+
+RUN php artisan storage:link
+
+# RUN php artisan config:cache \
+#     && php artisan route:cache \
+#     && php artisan view:cacheｃ
+
+
 
 # Dockerfile に追加（php.ini 設定）
 RUN echo "upload_max_filesize=50M" >> /usr/local/etc/php/conf.d/uploads.ini \
