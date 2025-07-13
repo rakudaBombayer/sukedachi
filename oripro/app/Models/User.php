@@ -28,6 +28,7 @@ class User extends Authenticatable
         'password',
         'address',
         'self_introduction',
+        'remember_token',
         // 他の許可したいカラムも追加
     ];
 

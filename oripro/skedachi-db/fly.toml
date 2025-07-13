@@ -1,0 +1,33 @@
+# fly.toml app configuration file generated for skedachi-db on 2025-07-13T05:36:32+09:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'skedachi-db'
+primary_region = 'nrt'
+
+[build]
+  image = 'mysql:8.1'
+
+
+
+[[services]]
+  internal_port = 3306
+  protocol = "tcp"
+
+  [services.concurrency]
+    type = "connections"
+    hard_limit = 100
+    soft_limit = 80
+
+  [[services.ports]]
+    port = 3306
+
+[[vm]]
+  memory = '2gb'
+  cpu_kind = 'shared'
+  cpus = 1
+
+[mounts]
+  source = "sukedachidata"
+  destination = "/var/lib/mysql"
