@@ -15,9 +15,9 @@
             @csrf
 
             <!-- Email Address -->
-            <div>
+            <div class="flex flex-col gap-2 items-center">
                 <x-input-label for="email" :value="__('メールアドレス')" />
-                <x-text-input id="email" class=" bg-[#F2EEEE] border border-[#F2EEEE] rounded-full px-4 py-2" type="email" name="email" :value="old    ('email')" required autofocus />
+                <x-text-input id="email" class=" bg-[#F2EEEE] border border-[#F2EEEE] !rounded-full px-4 py-2" type="email" name="email" :value="old    ('email')" required autofocus />
                 <x-input-error :messages="$errors->get('email')" class="mt-2" !important/>
             </div>
 
