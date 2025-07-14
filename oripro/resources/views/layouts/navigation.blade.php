@@ -11,8 +11,8 @@
                 </div> --}}
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('index')" :active="request()->routeIs('index')" class="text-black font-black text-2xl tracking-wide">
+                <div class="shrink-0 flex items-center">
+                    <x-nav-link :href="route('index')" :active="request()->routeIs('index')" class="text-black !font-bold !text-xl tracking-wide">
                         {{-- {{ __('Dashboard') }} --}}
                         スケダチ
                     </x-nav-link>
