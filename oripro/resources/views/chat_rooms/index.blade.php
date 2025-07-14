@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="min-h-screen flex flex-col">
-
+{{-- <div class="min-h-screen flex flex-col"> --}}
+<div class="min-h-[calc(100vh-100px)] flex flex-col">
     {{-- ヘッダー --}}
     {{-- <div class="bg-[#fd8f8f] text-white text-center py-4 text-lg font-semibold shadow">
         チャットルーム
