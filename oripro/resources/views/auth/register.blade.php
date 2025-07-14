@@ -16,7 +16,7 @@
         <!-- Name -->
         <div class="flex flex-col gap-2 items-center">
             <x-input-label for="nickname" :value="__('ニックネーム')" />
-            <x-text-input id="nickname" class="block mt-1 w-full" type="text" name="nickname" :value="old('nickname')" required autofocus autocomplete="nickname" class="w-3/4 bg-[#F2EEEE] border border-[#F2EEEE] rounded-full px-4 py-2"/>
+            <x-text-input id="nickname" class="block mt-1 w-full" type="text" name="nickname" :value="old('nickname')" required autofocus autocomplete="nickname" class="w-3/4 bg-[#F2EEEE] border border-[#F2EEEE] !rounded-full px-4 py-2"/>
             <x-input-error :messages="$errors->get('nickname')" class="mt-2" />
         </div>
 
@@ -24,7 +24,7 @@
             <x-input-label for="address" :value="__('だいたい住所')" />
             <x-text-input id="address" class="block mt-1 w-full" type="text" name="address" :value="old('address')" 
             placeholder="市区町村まで"
-            required autofocus autocomplete="address" class="w-3/4 bg-[#F2EEEE] border border-[#F2EEEE] rounded-full px-4 py-2"/>
+            required autofocus autocomplete="address" class="w-3/4 bg-[#F2EEEE] border border-[#F2EEEE] !rounded-full px-4 py-2"/>
             <x-input-error :messages="$errors->get('address')" class="mt-2" />
         </div>
 
@@ -32,13 +32,13 @@
         <!-- Email Address -->
         <div class="mt-4 flex flex-col gap-2 items-center">
             <x-input-label for="email" :value="__('メールアドレス')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" class="w-3/4 bg-[#F2EEEE] border border-[#F2EEEE] rounded-full px-4 py-2"/>
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" class="w-3/4 bg-[#F2EEEE] border border-[#F2EEEE] !rounded-full px-4 py-2"/>
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <div class="mt-4 flex flex-col gap-2 items-center">
             <x-input-label for="self_introduction" :value="__('自己紹介')" />
-            <textarea id="self_introduction" class="block mt-1 w-3/4 rounded-md shadow-sm bg-[#F2EEEE] border-[#F2EEEE] focus:border-indigo-500 focus:ring-indigo-500" name="self_introduction" rows="5" required  autofocus autocomplete="self_introduction">{{ old('self_introduction') }}</textarea>
+            <textarea id="self_introduction" class="block mt-1 w-3/4 !rounded-full shadow-sm bg-[#F2EEEE] border-[#F2EEEE] focus:border-indigo-500 focus:ring-indigo-500" name="self_introduction" rows="5" required  autofocus autocomplete="self_introduction">{{ old('self_introduction') }}</textarea>
             <x-input-error :messages="$errors->get('self_introduction')" class="mt-2" />
         </div>
 
@@ -52,7 +52,7 @@
                             name="password"
                             placeholder="8桁以上の英数字でお願いします。"
                             required autocomplete="new-password" 
-                            class="w-3/4 bg-[#F2EEEE] border border-[#F2EEEE] rounded-full px-4 py-2"
+                            class="w-3/4 bg-[#F2EEEE] border border-[#F2EEEE] !rounded-full px-4 py-2"
                             />
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
@@ -66,7 +66,7 @@
                             type="password"
                             name="password_confirmation" required autocomplete="new-password" 
                             placeholder="上と同じものを入力してください。"
-                            class="w-3/4 bg-[#F2EEEE] border border-[#F2EEEE] rounded-full px-4 py-2"
+                            class="w-3/4 bg-[#F2EEEE] border border-[#F2EEEE] !rounded-full px-4 py-2"
                             />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />

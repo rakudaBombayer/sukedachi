@@ -14,7 +14,7 @@
         {{-- <div> --}}
         <div class="flex flex-col gap-2 items-center">
             <x-input-label for="email" :value="__('メールアドレス')"  />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username"  class="w-3/4 bg-[#F2EEEE] border border-[#F2EEEE] rounded-full px-4 py-2" />
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username"  class="w-3/4 bg-[#F2EEEE] border border-[#F2EEEE] !rounded-full px-4 py-2" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
         
@@ -27,7 +27,7 @@
                             type="password"
                             name="password"
                             required autocomplete="current-password" 
-                            class="w-3/4 bg-[#F2EEEE] border border-[#F2EEEE] rounded-full px-4 py-2"/>
+                            class="w-3/4 bg-[#F2EEEE] border border-[#F2EEEE] !rounded-full px-4 py-2"/>
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
