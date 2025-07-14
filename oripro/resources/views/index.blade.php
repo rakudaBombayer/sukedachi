@@ -39,11 +39,15 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                 
                 @foreach ($allRequests as $request)
-                    <div class="bg-[#FEE1E1] shadow rounded-md p-4 hover:bg-[#FF9D9D] transition aspect-square min-h-[100px]">
+                    {{-- <div class="bg-[#FEE1E1] shadow rounded-md p-4 hover:bg-[#FF9D9D] transition aspect-square min-h-[100px]">
                         <a href="{{ route('requests.show', $request->request_ID) }}" class="font-semibold text-black hover:underline block">{{ $request->title }}</a>
                         <p class="text-sm font-bold text-gray-600 mt-1">場所 {{ $request->general_area }}</p>
-                    </div>
-                            
+                    </div> --}}
+                    <a href="{{ route('requests.show', $request->request_ID) }}" class="block bg-[#FEE1E1] shadow rounded-md p-4 hover:bg-[#FF9D9D] transition aspect-square min-h-[100px]">
+                    <span class="font-semibold text-black block">{{ $request->title }}</span>
+                    <p class="text-sm font-bold text-gray-600 mt-1">場所 {{ $request->general_area }}</p>
+                    </a>
+    
                 @endforeach
             </div>
 
