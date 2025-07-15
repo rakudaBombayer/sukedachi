@@ -43,15 +43,21 @@
                         </x-dropdown-link> --}}
 
                         <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <x-dropdown-link :href="route('logout')"
+                        @auth
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('ログアウト') }}
+                                    {{ __('ログアウト') }}
+                                </x-dropdown-link>
+                            </form>
+                        @endauth
+                        @guest
+                            <x-dropdown-link :href="route('login')">
+                                ログイン
                             </x-dropdown-link>
-                        </form>
+                        @endguest
                     </x-slot>
                 </x-dropdown>
             </div>
@@ -91,6 +97,7 @@
                 </x-responsive-nav-link> --}}
 
                 <!-- Authentication -->
+                @auth
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 
@@ -100,6 +107,12 @@
                         {{ __('ログアウト') }}
                     </x-responsive-nav-link>
                 </form>
+                @endauth
+                @guest
+                    <x-responsive-nav-link :href="route('login')">
+                        ログイン
+                    </x-responsive-nav-link>
+                @endguest
             </div>
         </div>
     </div>
