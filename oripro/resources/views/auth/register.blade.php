@@ -38,7 +38,7 @@
 
         <div class="mt-4 flex flex-col gap-2 items-center">
             <x-input-label for="self_introduction" :value="__('自己紹介')" />
-            <textarea id="self_introduction" class="block mt-1 w-3/4 !rounded-full shadow-sm bg-[#F2EEEE] border-[#F2EEEE] focus:border-indigo-500 focus:ring-indigo-500" name="self_introduction" rows="5" required  autofocus autocomplete="self_introduction">{{ old('self_introduction') }}</textarea>
+            <textarea id="self_introduction" class="block mt-1 w-3/4 !rounded-3xl shadow-sm bg-[#F2EEEE] border-[#F2EEEE] focus:border-indigo-500 focus:ring-indigo-500 resize-none" name="self_introduction" rows="5" required  autofocus autocomplete="self_introduction">{{ old('self_introduction') }}</textarea>
             <x-input-error :messages="$errors->get('self_introduction')" class="mt-2" />
         </div>
 
