@@ -96,9 +96,9 @@ Route::get('/chat_messages/{chatRoomId}', [ChatMessageController::class, 'index'
 
 
 //重複しているかも↓
-Route::get('/chat_rooms/{chatRoom}', [ChatRoomController::class, 'show'])->name('chat_rooms.show');
-//重複しているかも↓
-Route::post('/chat_rooms', [ChatRoomController::class, 'store'])->name('chat_rooms.store');
+// Route::get('/chat_rooms/{chatRoom}', [ChatRoomController::class, 'show'])->name('chat_rooms.show');
+// //重複しているかも↓
+// Route::post('/chat_rooms', [ChatRoomController::class, 'store'])->name('chat_rooms.store');
 
 
 // Requestルート
